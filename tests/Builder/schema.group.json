@@ -1,0 +1,90 @@
+{
+    "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:Schema"
+    ],
+    "id": "urn:ietf:params:scim:schemas:core:2.0:Group",
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:core:2.0:Group"
+    },
+    "name": "Group",
+    "description": "Group",
+    "attributes": [
+        {
+            "name": "displayName",
+            "description": "A human-readable name for the Group. REQUIRED.",
+            "type": "string",
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": false,
+            "caseExact": false
+        },
+        {
+            "name": "members",
+            "description": "A list of members of the Group.",
+            "type": "complex",
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": true,
+            "multiValued": true,
+            "caseExact": false,
+            "subAttributes": [
+                {
+                    "name": "value",
+                    "description": "Identifier of the member of this Group.",
+                    "type": "string",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "$ref",
+                    "description": "The URI corresponding to a SCIM resource that is a member of this Group.",
+                    "type": "reference",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false,
+                    "referenceTypes": [
+                        "User",
+                        "Group"
+                    ]
+                },
+                {
+                    "name": "type",
+                    "description": "A label indicating the type of resource, e.g., 'User' or 'Group'.",
+                    "type": "string",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false,
+                    "canonicalValues": [
+                        "User",
+                        "Group"
+                    ]
+                },
+                {
+                    "name": "display",
+                    "description": "Display name for the member",
+                    "type": "string",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,112 @@
+{
+    "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:Schema"
+    ],
+    "id": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
+    "meta": {
+        "resourceType": "Schema",
+        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+    },
+    "name": "ResourceType",
+    "description": "Specifies the schema that describes a SCIM resource type",
+    "attributes": [
+        {
+            "name": "id",
+            "description": "The resource type's server unique id. May be the same as the 'name' attribute.",
+            "type": "string",
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": false,
+            "caseExact": false
+        },
+        {
+            "name": "name",
+            "description": "The resource type name.  When applicable, service providers MUST specify the name, e.g., 'User'.",
+            "type": "string",
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": true,
+            "multiValued": false,
+            "caseExact": false
+        },
+        {
+            "name": "description",
+            "description": "The resource type's human-readable description. When applicable, service providers MUST specify the description.",
+            "type": "string",
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": false,
+            "caseExact": false
+        },
+        {
+            "name": "endpoint",
+            "description": "The resource type's HTTP-addressable endpoint relative to the Base URL, e.g., '/Users'.",
+            "type": "reference",
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": true,
+            "multiValued": false,
+            "caseExact": false,
+            "referenceTypes": [
+                "uri"
+            ]
+        },
+        {
+            "name": "schema",
+            "description": "The resource type's primary/base schema URI.",
+            "type": "reference",
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": true,
+            "multiValued": false,
+            "caseExact": true,
+            "referenceTypes": [
+                "uri"
+            ]
+        },
+        {
+            "name": "schemaExtensions",
+            "description": "A list of URIs of the resource type's schema extensions.",
+            "type": "complex",
+            "mutability": "readOnly",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": true,
+            "multiValued": true,
+            "caseExact": false,
+            "subAttributes": [
+                {
+                    "name": "schema",
+                    "description": "The URI of a schema extension.",
+                    "type": "reference",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": true,
+                    "multiValued": false,
+                    "caseExact": true,
+                    "referenceTypes": [
+                        "uri"
+                    ]
+                },
+                {
+                    "name": "required",
+                    "description": "A Boolean value that specifies whether or not the schema extension is required for the resource type.  If true, a resource of this type MUST include this schema extension and also include any attributes declared as required in this schema extension. If false, a resource of this type MAY omit this schema extension.",
+                    "type": "boolean",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "required": true,
+                    "multiValued": false,
+                    "caseExact": false
+                }
+            ]
+        }
+    ]
+}

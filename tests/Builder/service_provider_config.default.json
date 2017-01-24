@@ -1,0 +1,28 @@
+{
+    "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+    ],
+    "id": "ServiceProviderConfig",
+    "meta": {
+        "resourceType": "ServiceProviderConfig"
+    },
+    "patch": {
+        "supported": false
+    },
+    "bulk": {
+        "supported": false
+    },
+    "filter": {
+        "supported": false
+    },
+    "etag": {
+        "supported": false
+    },
+    "changePassword": {
+        "supported": false
+    },
+    "sort": {
+        "supported": false
+    },
+    "authenticationSchemes": []
+}
