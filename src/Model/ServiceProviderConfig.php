@@ -169,7 +169,7 @@ class ServiceProviderConfig extends AbstractResource
     public function getPatch()
     {
         if (!$this->patch) {
-            $this->patch = new Spc\Patch($this->patchSupported);
+            $this->patch = new SPC\Patch($this->patchSupported);
         }
 
         return $this->patch;
