@@ -11,19 +11,17 @@
 
 namespace Tmilos\ScimSchema\Builder;
 
-use Tmilos\ScimSchema\Model\Attribute;
-use Tmilos\ScimSchema\Model\AttributeTypeValue;
-use Tmilos\ScimSchema\Model\MutabilityValue;
-use Tmilos\ScimSchema\Model\ReferenceTypeValue;
-use Tmilos\ScimSchema\Model\ReturnedValue;
-use Tmilos\ScimSchema\Model\UniquenessValue;
+use Tmilos\ScimSchema\Model\Schema\Attribute;
+use Tmilos\ScimSchema\Model\Schema\MutabilityValue;
+use Tmilos\ScimSchema\Model\Schema\ReturnedValue;
+use Tmilos\ScimSchema\Model\Schema\UniquenessValue;
 
 class AttributeBuilder
 {
     /** @var string */
     protected $name;
 
-    /** @var AttributeTypeValue */
+    /** @var string */
     protected $type;
 
     /** @var bool */
@@ -44,26 +42,26 @@ class AttributeBuilder
     /** @var bool */
     protected $caseExact = false;
 
-    /** @var MutabilityValue */
+    /** @var string */
     protected $mutability;
 
-    /** @var ReturnedValue */
+    /** @var string */
     protected $returned;
 
-    /** @var UniquenessValue */
+    /** @var string */
     protected $uniqueness;
 
     /** @var string[] */
     protected $referenceTypes = [];
 
     /**
-     * @param string             $name
-     * @param AttributeTypeValue $type
-     * @param string             $description
+     * @param string $name
+     * @param string $type
+     * @param string $description
      *
      * @return AttributeBuilder
      */
-    public static function create($name, AttributeTypeValue $type, $description = null)
+    public static function create($name, $type, $description = null)
     {
         $result = new static();
         $result->name = $name;
@@ -75,9 +73,9 @@ class AttributeBuilder
 
     protected function __construct()
     {
-        $this->mutability = MutabilityValue::READ_WRITE();
-        $this->returned = ReturnedValue::BY_DEFAULT();
-        $this->uniqueness = UniquenessValue::NONE();
+        $this->mutability = MutabilityValue::READ_WRITE;
+        $this->returned = ReturnedValue::BY_DEFAULT;
+        $this->uniqueness = UniquenessValue::NONE;
     }
 
     /**
@@ -138,11 +136,11 @@ class AttributeBuilder
     }
 
     /**
-     * @param MutabilityValue $mutability
+     * @param string $mutability
      *
      * @return AttributeBuilder
      */
-    public function setMutability(MutabilityValue $mutability)
+    public function setMutability($mutability)
     {
         $this->mutability = $mutability;
 
@@ -150,11 +148,11 @@ class AttributeBuilder
     }
 
     /**
-     * @param ReturnedValue $returned
+     * @param string $returned
      *
      * @return AttributeBuilder
      */
-    public function setReturned(ReturnedValue $returned)
+    public function setReturned($returned)
     {
         $this->returned = $returned;
 
@@ -162,11 +160,11 @@ class AttributeBuilder
     }
 
     /**
-     * @param UniquenessValue $uniqueness
+     * @param string $uniqueness
      *
      * @return AttributeBuilder
      */
-    public function setUniqueness(UniquenessValue $uniqueness)
+    public function setUniqueness($uniqueness)
     {
         $this->uniqueness = $uniqueness;
 
@@ -227,13 +225,13 @@ class AttributeBuilder
     }
 
     /**
-     * @param ReferenceTypeValue $referenceType
+     * @param string $referenceType
      *
      * @return AttributeBuilder
      */
-    public function addReferenceType(ReferenceTypeValue $referenceType)
+    public function addReferenceType($referenceType)
     {
-        $this->referenceTypes[] = $referenceType->getValue();
+        $this->referenceTypes[] = $referenceType;
 
         return $this;
     }

@@ -12,9 +12,8 @@
 namespace Tmilos\ScimSchema\Validator;
 
 use Tmilos\ScimSchema\Helper;
-use Tmilos\ScimSchema\Model\Attribute;
-use Tmilos\ScimSchema\Model\AttributeCollection;
-use Tmilos\ScimSchema\Model\AttributeTypeValue;
+use Tmilos\ScimSchema\Model\Schema\Attribute;
+use Tmilos\ScimSchema\Model\Schema\AttributeTypeValue;
 use Tmilos\ScimSchema\Model\Schema;
 
 class SchemaValidator
@@ -72,7 +71,7 @@ class SchemaValidator
                 continue;
             }
 
-            $attribute = AttributeCollection::find($propertyName, $attributes);
+            $attribute = Helper::findAttribute($propertyName, $attributes);
             if (!$attribute) {
                 $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is not defined');
                 continue;
@@ -91,7 +90,7 @@ class SchemaValidator
                 if ($attribute->isMultiValued()) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is defined in schema as multi-valued, but got object');
                     continue;
-                } elseif (!$attribute->getType()->equals(AttributeTypeValue::COMPLEX)) {
+                } elseif ($attribute->getType() !== AttributeTypeValue::COMPLEX) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is not defined in schema as complex, but got object');
                     continue;
                 }
@@ -100,11 +99,11 @@ class SchemaValidator
                 if ($attribute->isMultiValued()) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is defined in schema as multi-valued, but got scalar');
                     continue;
-                } elseif ($attribute->getType()->equals(AttributeTypeValue::COMPLEX)) {
+                } elseif ($attribute->getType() === AttributeTypeValue::COMPLEX) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is defined in schema as complex, but got scalar');
                     continue;
-                } elseif (!$attribute->getType()->isValueValid($value)) {
-                    $validationResult->add($propertyName, $parentPath, $schemaId, sprintf('Attribute has invalid value for type "%s"', $attribute->getType()->getValue()));
+                } elseif (!AttributeTypeValue::isValueValid($value, $attribute->getType())) {
+                    $validationResult->add($propertyName, $parentPath, $schemaId, sprintf('Attribute has invalid value for type "%s"', $attribute->getType()));
                     continue;
                 }
             }

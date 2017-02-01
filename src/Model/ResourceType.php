@@ -11,7 +11,7 @@
 
 namespace Tmilos\ScimSchema\Model;
 
-class ResourceType extends AbstractResource
+class ResourceType extends Resource
 {
     const SCHEMA = 'Schema';
     const RESOURCE_TYPE = 'ResourceType';
@@ -43,7 +43,11 @@ class ResourceType extends AbstractResource
      */
     public function __construct($id)
     {
-        parent::__construct($id, [Schema::RESOURCE_TYPE], static::RESOURCE_TYPE);
+        parent::__construct();
+
+        $this->id = $id;
+        $this->schemas = [Schema::RESOURCE_TYPE];
+        $this->meta = new Meta(static::RESOURCE_TYPE);
     }
 
     /**
@@ -137,9 +141,9 @@ class ResourceType extends AbstractResource
         unset($this->schemaExtensions[(string) $schema]);
     }
 
-    public function toArray()
+    public function serializeObject()
     {
-        $result = parent::toArray();
+        $result = parent::serializeObject();
 
         $result['name'] = $this->name;
         $result['description'] = $this->description;
@@ -152,6 +156,29 @@ class ResourceType extends AbstractResource
                     'schema' => $schema,
                     'required' => (bool) $required,
                 ];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return ResourceType
+     */
+    public static function deserializeObject(array $data)
+    {
+        /** @var ResourceType $result */
+        $result = self::deserializeCommonAttributes($data);
+        $result->name = $data['name'];
+        $result->description = $data['description'];
+        $result->endpoint = $data['endpoint'];
+        $result->schema = $data['schema'];
+        if (isset($data['schemaExtensions'])) {
+            $result->schemaExtensions = [];
+            foreach ($data['schemaExtensions'] as $schemaExtension) {
+                $result->schemaExtensions[$schemaExtension['schema']] = $schemaExtension['required'];
             }
         }
 

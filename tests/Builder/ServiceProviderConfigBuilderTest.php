@@ -10,7 +10,7 @@ class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new ServiceProviderConfigBuilder();
         $spc = $builder->buildServiceProviderConfig();
-        $arr = $spc->toArray();
+        $arr = $spc->serializeObject();
 
         $this->assertEquals($this->getExpected(__DIR__.'/service_provider_config.default.json'), $arr);
     }
@@ -39,7 +39,7 @@ class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
         ;
 
         $spc = $builder->buildServiceProviderConfig();
-        $arr = $spc->toArray();
+        $arr = $spc->serializeObject();
 
         $this->assertEquals($this->getExpected(__DIR__.'/service_provider_config.custom.json'), $arr);
     }

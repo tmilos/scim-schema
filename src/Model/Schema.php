@@ -11,9 +11,7 @@
 
 namespace Tmilos\ScimSchema\Model;
 
-use Doctrine\Common\Collections\Collection;
-
-class Schema extends AbstractResource
+class Schema extends Resource
 {
     const SCHEMA = 'urn:ietf:params:scim:schemas:core:2.0:Schema';
     const RESOURCE_TYPE = 'urn:ietf:params:scim:schemas:core:2.0:ResourceType';
@@ -28,7 +26,7 @@ class Schema extends AbstractResource
     /** @var string */
     protected $description;
 
-    /** @var Attribute[]|Collection */
+    /** @var Schema\Attribute[] */
     protected $attributes = [];
 
     /**
@@ -36,9 +34,12 @@ class Schema extends AbstractResource
      */
     public function __construct($id)
     {
-        parent::__construct($id, [static::SCHEMA], ResourceType::SCHEMA);
+        parent::__construct();
+        $this->id = $id;
+        $this->schemas = [static::SCHEMA];
+        $this->meta = new Meta(ResourceType::SCHEMA);
 
-        $this->attributes = new AttributeCollection();
+        $this->attributes = [];
     }
 
     /**
@@ -74,7 +75,15 @@ class Schema extends AbstractResource
     }
 
     /**
-     * @return Collection|Attribute[]
+     * @param Schema\Attribute $attribute
+     */
+    public function addAttribute(Schema\Attribute $attribute)
+    {
+        $this->attributes[] = $attribute;
+    }
+
+    /**
+     * @return Schema\Attribute[]
      */
     public function getAttributes()
     {
@@ -84,7 +93,7 @@ class Schema extends AbstractResource
     /**
      * @param string $name
      *
-     * @return null|Attribute
+     * @return null|Schema\Attribute
      */
     public function findAttribute($name)
     {
@@ -97,14 +106,33 @@ class Schema extends AbstractResource
         return null;
     }
 
-    public function toArray()
+    public function serializeObject()
     {
-        $result = parent::toArray();
+        $result = parent::serializeObject();
         $result['name'] = $this->name;
         $result['description'] = $this->description;
         $result['attributes'] = [];
         foreach ($this->attributes as $attribute) {
-            $result['attributes'][] = $attribute->toArray();
+            $result['attributes'][] = $attribute->serializeObject();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Schema
+     */
+    public static function deserializeObject(array $data)
+    {
+        /** @var Schema $result */
+        $result = self::deserializeCommonAttributes($data);
+        $result->name = $data['name'];
+        $result->description = $data['description'];
+        $result->attributes = [];
+        foreach ($data['attributes'] as $attribute) {
+            $result->attributes[] = Schema\Attribute::deserializeObject($attribute);
         }
 
         return $result;

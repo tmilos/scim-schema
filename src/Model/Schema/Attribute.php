@@ -9,9 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model;
+namespace Tmilos\ScimSchema\Model\Schema;
 
-class Attribute
+use Tmilos\ScimSchema\Model\SerializableInterface;
+
+class Attribute implements SerializableInterface
 {
     /** @var string */
     protected $name;
@@ -49,63 +51,45 @@ class Attribute
     /** @var string[] */
     protected $referenceTypes = [];
 
-    // INTERMEDIARY VALUE OBJECTS -----------
-
-    /** @var AttributeTypeValue */
-    private $typeValue;
-
-    /** @var MutabilityValue */
-    private $mutabilityValue;
-
-    /** @var ReturnedValue */
-    private $returnedValue;
-
-    /** @var UniquenessValue */
-    private $uniquenessValue;
-
     /**
-     * @param string             $name
-     * @param AttributeTypeValue $type
-     * @param bool               $multiValued
-     * @param bool               $required
-     * @param string             $description
-     * @param Attribute[]        $subAttributes
-     * @param \string[]          $canonicalValues
-     * @param bool               $caseExact
-     * @param MutabilityValue    $mutability
-     * @param ReturnedValue      $returned
-     * @param UniquenessValue    $uniqueness
-     * @param \string[]          $referenceTypes
+     * @param string      $name
+     * @param string      $type
+     * @param bool        $multiValued
+     * @param bool        $required
+     * @param string      $description
+     * @param Attribute[] $subAttributes
+     * @param \string[]   $canonicalValues
+     * @param bool        $caseExact
+     * @param string      $mutability
+     * @param string      $returned
+     * @param string      $uniqueness
+     * @param \string[]   $referenceTypes
      */
     public function __construct(
         $name,
-        AttributeTypeValue $type,
+        $type,
         $multiValued,
         $required,
         $description,
         array $subAttributes,
         array $canonicalValues,
         $caseExact,
-        MutabilityValue $mutability,
-        ReturnedValue $returned,
-        UniquenessValue $uniqueness,
+        $mutability,
+        $returned,
+        $uniqueness,
         array $referenceTypes
     ) {
         $this->name = $name;
-        $this->type = $type->getValue();
-        $this->typeValue = $type;
+        $this->type = $type;
         $this->multiValued = $multiValued;
         $this->required = $required;
         $this->description = $description;
         $this->subAttributes = $subAttributes;
         $this->canonicalValues = $canonicalValues;
         $this->caseExact = $caseExact;
-        $this->mutability = $mutability->getValue();
-        $this->mutabilityValue = $mutability;
-        $this->returned = $returned->getValue();
-        $this->returnedValue = $returned;
-        $this->uniqueness = $uniqueness->getValue();
-        $this->uniquenessValue = $uniqueness;
+        $this->mutability = $mutability;
+        $this->returned = $returned;
+        $this->uniqueness = $uniqueness;
         $this->referenceTypes = $referenceTypes;
     }
 
@@ -118,15 +102,11 @@ class Attribute
     }
 
     /**
-     * @return AttributeTypeValue
+     * @return string
      */
     public function getType()
     {
-        if (!$this->typeValue) {
-            $this->typeValue = new AttributeTypeValue($this->type);
-        }
-
-        return $this->typeValue;
+        return $this->type;
     }
 
     /**
@@ -178,39 +158,27 @@ class Attribute
     }
 
     /**
-     * @return MutabilityValue
+     * @return string
      */
     public function getMutability()
     {
-        if (!$this->mutabilityValue) {
-            $this->mutabilityValue = new MutabilityValue($this->mutability);
-        }
-
-        return $this->mutabilityValue;
+        return $this->mutability;
     }
 
     /**
-     * @return ReturnedValue
+     * @return string
      */
     public function getReturned()
     {
-        if (!$this->returnedValue) {
-            $this->returnedValue = new ReturnedValue($this->returned ?: ReturnedValue::BY_DEFAULT);
-        }
-
-        return $this->returnedValue;
+        return $this->returned;
     }
 
     /**
-     * @return UniquenessValue
+     * @return string
      */
     public function getUniqueness()
     {
-        if (!$this->uniquenessValue) {
-            $this->uniquenessValue = new UniquenessValue($this->uniqueness ?: UniquenessValue::NONE);
-        }
-
-        return $this->uniquenessValue;
+        return $this->uniqueness;
     }
 
     /**
@@ -240,7 +208,7 @@ class Attribute
     /**
      * @return array
      */
-    public function toArray()
+    public function serializeObject()
     {
         $result = [
             'name' => $this->name,
@@ -263,7 +231,7 @@ class Attribute
         if ($this->subAttributes) {
             $result['subAttributes'] = [];
             foreach ($this->subAttributes as $subAttribute) {
-                $result['subAttributes'][] = $subAttribute->toArray();
+                $result['subAttributes'][] = $subAttribute->serializeObject();
             }
         }
         if ($this->canonicalValues) {
@@ -272,6 +240,37 @@ class Attribute
         if ($this->referenceTypes) {
             $result['referenceTypes'] = $this->referenceTypes;
         }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Attribute
+     */
+    public static function deserializeObject(array $data)
+    {
+        $subAttributes = [];
+        if (isset($data['subAttributes'])) {
+            foreach ($data['subAttributes'] as $subAttribute) {
+                $subAttributes[] = static::deserializeObject($subAttribute);
+            }
+        }
+        $result = new static(
+            $data['name'],
+            $data['type'],
+            $data['multiValued'],
+            $data['required'],
+            isset($data['description']) ? $data['description'] : null,
+            $subAttributes,
+            isset($data['canonicalValues']) ? $data['canonicalValues'] : null,
+            isset($data['caseExact']) ? $data['caseExact'] : false,
+            $data['mutability'],
+            $data['returned'],
+            isset($data['uniqueness']) ? $data['uniqueness'] : null,
+            isset($data['referenceTypes']) ? $data['referenceTypes'] : null
+        );
 
         return $result;
     }

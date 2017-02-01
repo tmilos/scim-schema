@@ -7,7 +7,7 @@ class SchemaBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_group()
     {
         $builder = new SchemaBuilder();
-        $schema = $builder->getGroup()->toArray();
+        $schema = $builder->getGroup()->serializeObject();
 
         $this->compare($this->getExpectedGroup(), $schema);
     }
@@ -15,7 +15,7 @@ class SchemaBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_user()
     {
         $builder = new SchemaBuilder();
-        $schema = $builder->getUser()->toArray();
+        $schema = $builder->getUser()->serializeObject();
 
         $this->compare($this->getExpectedUser(), $schema);
     }
@@ -23,7 +23,7 @@ class SchemaBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_schema()
     {
         $builder = new SchemaBuilder();
-        $schema = $builder->getSchema()->toArray();
+        $schema = $builder->getSchema()->serializeObject();
 
         $this->compare($this->getExpectedSchema(), $schema);
     }
@@ -31,7 +31,7 @@ class SchemaBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_resource_type()
     {
         $builder = new SchemaBuilder();
-        $schema = $builder->getResourceType()->toArray();
+        $schema = $builder->getResourceType()->serializeObject();
 
         $this->compare($this->getExpectedResourceType(), $schema);
     }
@@ -39,7 +39,7 @@ class SchemaBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_service_provider_config()
     {
         $builder = new SchemaBuilder();
-        $schema = $builder->getServiceProviderConfig()->toArray();
+        $schema = $builder->getServiceProviderConfig()->serializeObject();
 
         $this->compare($this->getExpectedServiceProviderConfig(), $schema);
     }
@@ -47,7 +47,7 @@ class SchemaBuilderTest extends \PHPUnit_Framework_TestCase
     public function test_enterprise_user()
     {
         $builder = new SchemaBuilder();
-        $schema = $builder->getEnterpriseUser()->toArray();
+        $schema = $builder->getEnterpriseUser()->serializeObject();
 
         $this->compare($this->getExpectedEnterpriseUser(), $schema);
     }

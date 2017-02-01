@@ -11,7 +11,9 @@
 
 namespace Tmilos\ScimSchema\Model\SPC;
 
-class AuthenticationScheme
+use Tmilos\ScimSchema\Model\SerializableInterface;
+
+class AuthenticationScheme implements SerializableInterface
 {
     const OAUTH = 'oauth';
     const OAUTH2 = 'oauth2';
@@ -33,22 +35,6 @@ class AuthenticationScheme
 
     /** @var string */
     private $documentationUri;
-
-    /**
-     * @param array $arr
-     *
-     * @return AuthenticationScheme
-     */
-    public static function fromArray(array $arr)
-    {
-        return new static(
-            $arr['type'],
-            $arr['name'],
-            $arr['description'],
-            isset($arr['specUri']) ? $arr['specUri'] : null,
-            isset($arr['documentationUri']) ? $arr['documentationUri'] : null
-        );
-    }
 
     /**
      * @param string $type
@@ -109,7 +95,7 @@ class AuthenticationScheme
     /**
      * @return array
      */
-    public function toArray()
+    public function serializeObject()
     {
         $result = [
             'type' => $this->type,
@@ -125,5 +111,21 @@ class AuthenticationScheme
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return AuthenticationScheme
+     */
+    public static function deserializeObject(array $data)
+    {
+        return new static(
+            $data['type'],
+            $data['name'],
+            $data['description'],
+            isset($data['specUri']) ? $data['specUri'] : null,
+            isset($data['documentationUri']) ? $data['documentationUri'] : null
+        );
     }
 }

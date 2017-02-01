@@ -10,11 +10,11 @@ class ResourceTypeBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new ResourceTypeBuilder();
         $resourceTypes = [];
-        $resourceTypes[] = $builder->build(ResourceType::GROUP)->toArray();
-        $resourceTypes[] = $builder->build(ResourceType::SERVICE_PROVIDER_CONFIG)->toArray();
-        $resourceTypes[] = $builder->build(ResourceType::USER)->toArray();
-        $resourceTypes[] = $builder->build(ResourceType::SCHEMA)->toArray();
-        $resourceTypes[] = $builder->build(ResourceType::RESOURCE_TYPE)->toArray();
+        $resourceTypes[] = $builder->build(ResourceType::GROUP)->serializeObject();
+        $resourceTypes[] = $builder->build(ResourceType::SERVICE_PROVIDER_CONFIG)->serializeObject();
+        $resourceTypes[] = $builder->build(ResourceType::USER)->serializeObject();
+        $resourceTypes[] = $builder->build(ResourceType::SCHEMA)->serializeObject();
+        $resourceTypes[] = $builder->build(ResourceType::RESOURCE_TYPE)->serializeObject();
 
         $this->assertEquals($this->getExpected(), $resourceTypes);
     }

@@ -13,7 +13,7 @@ namespace Tmilos\ScimSchema\Model;
 
 use Tmilos\ScimSchema\Helper;
 
-class Meta
+class Meta implements SerializableInterface
 {
     /** @var string */
     protected $resourceType;
@@ -30,23 +30,35 @@ class Meta
     /** @var string */
     protected $version;
 
-    /** @var string */
-    private $resourceTypeValue;
+    /**
+     * @param array $data
+     *
+     * @return Meta
+     */
+    public static function deserializeObject(array $data)
+    {
+        $result = new static($data['resourceType'], isset($data['created']) ? Helper::string2dateTime($data['created']) : null);
+        if (isset($data['lastModified'])) {
+            $result->lastModified = Helper::string2dateTime($data['lastModified']);
+        }
+        if (isset($data['location'])) {
+            $result->location = $data['location'];
+        }
+        if (isset($data['version'])) {
+            $result->version = $data['version'];
+        }
+
+        return $result;
+    }
 
     /**
      * @param string    $resourceType
-     * @param string    $location
-     * @param string    $version
-     * @param \DateTime $created
-     * @param \DateTime $lastModified
+     * @param \DateTime $createdAt
      */
-    public function __construct($resourceType, $location, $version, \DateTime &$created = null, \DateTime &$lastModified = null)
+    public function __construct($resourceType, \DateTime $createdAt = null)
     {
         $this->resourceType = $resourceType;
-        $this->created = $created;
-        $this->lastModified = &$lastModified;
-        $this->location = $location;
-        $this->version = $version;
+        $this->created = $createdAt;
     }
 
     /**
@@ -54,7 +66,7 @@ class Meta
      */
     public function getResourceType()
     {
-        return $this->resourceTypeValue;
+        return $this->resourceType;
     }
 
     /**
@@ -63,14 +75,6 @@ class Meta
     public function getCreated()
     {
         return $this->created;
-    }
-
-    /**
-     * @param \DateTime $created
-     */
-    public function setCreated(\DateTime $created)
-    {
-        $this->created = $created;
     }
 
     /**
@@ -114,9 +118,17 @@ class Meta
     }
 
     /**
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
      * @return array
      */
-    public function toArray()
+    public function serializeObject()
     {
         $result = [
             'resourceType' => $this->resourceType,

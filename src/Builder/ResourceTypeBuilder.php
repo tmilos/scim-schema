@@ -107,7 +107,7 @@ class ResourceTypeBuilder
         $result->setDescription('User Account');
         $result->setEndpoint('/Users');
         $result->setSchema(Schema::USER);
-        $result->addSchemaExtension(Schema::ENTERPRISE_USER, true);
+        $result->addSchemaExtension(Schema::ENTERPRISE_USER, false);
         $result->getMeta()->setLocation($this->locationBase.'/ResourceTypes/'.$result->getId());
 
         return $result;

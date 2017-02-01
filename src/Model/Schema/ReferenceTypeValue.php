@@ -9,18 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model;
+namespace Tmilos\ScimSchema\Model\Schema;
 
-use Tmilos\Value\AbstractEnum;
-
-/**
- * @method static ReferenceTypeValue SCIM()
- * @method static ReferenceTypeValue USER()
- * @method static ReferenceTypeValue GROUP()
- * @method static ReferenceTypeValue EXTERNAL()
- * @method static ReferenceTypeValue URI()
- */
-class ReferenceTypeValue extends AbstractEnum
+abstract class ReferenceTypeValue
 {
     const SCIM = 'scim';
     const USER = 'User';

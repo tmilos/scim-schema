@@ -20,11 +20,11 @@ class Filter extends AbstractSPCItem
      * @param bool $supported
      * @param int  $maxResults
      */
-    public function __construct(&$supported, &$maxResults)
+    public function __construct($supported, $maxResults)
     {
         parent::__construct($supported);
 
-        $this->maxResults = &$maxResults;
+        $this->maxResults = $maxResults;
     }
 
     /**
@@ -35,13 +35,27 @@ class Filter extends AbstractSPCItem
         return $this->maxResults;
     }
 
-    public function toArray()
+    public function serializeObject()
     {
-        $result = parent::toArray();
+        $result = parent::serializeObject();
 
         if ($this->isSupported()) {
             $result['maxResults'] = $this->maxResults;
         }
+
+        return $result;
+    }
+
+    /**
+     * @param array $arr
+     *
+     * @return Filter
+     */
+    public static function deserializeObject(array $arr)
+    {
+        /** @var Filter $result */
+        $result = parent::deserializeObject($arr);
+        $result->maxResults = $arr['maxResults'];
 
         return $result;
     }

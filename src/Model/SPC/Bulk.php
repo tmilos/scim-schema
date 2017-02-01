@@ -24,12 +24,12 @@ class Bulk extends AbstractSPCItem
      * @param int  $maxOperations
      * @param int  $maxPayloadSize
      */
-    public function __construct(&$supported, &$maxOperations, &$maxPayloadSize)
+    public function __construct($supported, $maxOperations, $maxPayloadSize)
     {
         parent::__construct($supported);
 
-        $this->maxOperations = &$maxOperations;
-        $this->maxPayloadSize = &$maxPayloadSize;
+        $this->maxOperations = $maxOperations;
+        $this->maxPayloadSize = $maxPayloadSize;
     }
 
     /**
@@ -48,14 +48,29 @@ class Bulk extends AbstractSPCItem
         return $this->maxPayloadSize;
     }
 
-    public function toArray()
+    public function serializeObject()
     {
-        $result = parent::toArray();
+        $result = parent::serializeObject();
 
         if ($this->isSupported()) {
             $result['maxOperations'] = $this->maxOperations;
             $result['maxPayloadSize'] = $this->maxPayloadSize;
         }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return Bulk
+     */
+    public static function deserializeObject(array $data)
+    {
+        /** @var Bulk $result */
+        $result = parent::deserializeObject($data);
+        $result->maxOperations = $data['maxOperations'];
+        $result->maxPayloadSize = $data['maxPayloadSize'];
 
         return $result;
     }

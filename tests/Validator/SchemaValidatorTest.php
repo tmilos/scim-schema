@@ -4,7 +4,7 @@ namespace Tmilos\ScimSchema\Validator;
 
 use Tmilos\ScimSchema\Builder\AttributeBuilder;
 use Tmilos\ScimSchema\Builder\SchemaBuilder;
-use Tmilos\ScimSchema\Model\AttributeTypeValue;
+use Tmilos\ScimSchema\Model\Schema\AttributeTypeValue;
 use Tmilos\ScimSchema\Model\Schema;
 
 class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
@@ -55,7 +55,9 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_undefined_attribute()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(AttributeBuilder::create('foo', AttributeTypeValue::STRING()));
+        $schema->addAttribute(
+            AttributeBuilder::create('foo', AttributeTypeValue::STRING)->getAttribute()
+        );
 
         $object = [
             'bar' => '123',
@@ -71,7 +73,9 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_array_for_single_valued_attribute()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(AttributeBuilder::create('foo', AttributeTypeValue::STRING()));
+        $schema->addAttribute(
+            AttributeBuilder::create('foo', AttributeTypeValue::STRING)->getAttribute()
+        );
 
         $object = [
             'foo' => [1,2,3],
@@ -87,9 +91,10 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_object_for_multivalued_attribute()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::STRING())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::STRING)
                 ->setMultiValued(true)
+                ->getAttribute()
         );
 
         $object = [
@@ -109,8 +114,8 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_object_for_scalar_attribute()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::STRING())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::STRING)->getAttribute()
         );
 
         $object = [
@@ -130,9 +135,10 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_scalar_for_multivalued_attribute()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::STRING())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::STRING)
                 ->setMultiValued(true)
+                ->getAttribute()
         );
 
         $object = [
@@ -149,8 +155,8 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_scalar_for_complex_attribute()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::COMPLEX())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::COMPLEX)->getAttribute()
         );
 
         $object = ['name' => 'john'];
@@ -165,8 +171,8 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_invalid_string_type()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::STRING())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::STRING)->getAttribute()
         );
 
         $object = ['name' => 123];
@@ -181,8 +187,8 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_invalid_bool_type()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::BOOLEAN())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::BOOLEAN)->getAttribute()
         );
 
         $object = ['name' => 'john'];
@@ -197,12 +203,12 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_invalid_attribute_in_schema_extension()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('name', AttributeTypeValue::STRING())
+        $schema->addAttribute(
+            AttributeBuilder::create('name', AttributeTypeValue::STRING)->getAttribute()
         );
         $extensionSchema = new Schema(Schema::ENTERPRISE_USER);
-        $extensionSchema->getAttributes()->add(
-            AttributeBuilder::create('extra', AttributeTypeValue::BOOLEAN())
+        $extensionSchema->addAttribute(
+            AttributeBuilder::create('extra', AttributeTypeValue::BOOLEAN)->getAttribute()
         );
 
         $object = [
@@ -223,11 +229,12 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_error_on_invalid_sub_attribute_in_main_schema()
     {
         $schema = new Schema(Schema::USER);
-        $schema->getAttributes()->add(
-            AttributeBuilder::create('foo', AttributeTypeValue::COMPLEX())
+        $schema->addAttribute(
+            AttributeBuilder::create('foo', AttributeTypeValue::COMPLEX)
                 ->addSubAttribute(
-                    AttributeBuilder::create('bar', AttributeTypeValue::STRING())->getAttribute()
+                    AttributeBuilder::create('bar', AttributeTypeValue::STRING)->getAttribute()
                 )
+                ->getAttribute()
         );
 
         $object = [

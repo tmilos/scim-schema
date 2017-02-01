@@ -9,17 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model;
+namespace Tmilos\ScimSchema\Model\Schema;
 
-use Tmilos\Value\AbstractEnum;
-
-/**
- * @method static ReturnedValue ALWAYS()
- * @method static ReturnedValue NEVER()
- * @method static ReturnedValue BY_DEFAULT()
- * @method static ReturnedValue REQUEST()
- */
-class ReturnedValue extends AbstractEnum
+abstract class ReturnedValue
 {
     /**
      * The attribute is always returned, regardless of the contents of the "attributes" parameter.

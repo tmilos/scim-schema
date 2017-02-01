@@ -9,16 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model;
+namespace Tmilos\ScimSchema\Model\Schema;
 
-use Tmilos\Value\AbstractEnum;
-
-/**
- * @method static UniquenessValue NONE()
- * @method static UniquenessValue SERVER()
- * @method static UniquenessValue IN_GLOBAL()
- */
-class UniquenessValue extends AbstractEnum
+abstract class UniquenessValue
 {
     /**
      * The values are not intended to be unique in any way. DEFAULT.

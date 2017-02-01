@@ -9,17 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model;
+namespace Tmilos\ScimSchema\Model\Schema;
 
-use Tmilos\Value\AbstractEnum;
-
-/**
- * @method static MutabilityValue READ_ONLY()
- * @method static MutabilityValue READ_WRITE()
- * @method static MutabilityValue IMMUTABLE()
- * @method static MutabilityValue WRITE_ONLY()
- */
-class MutabilityValue extends AbstractEnum
+abstract class MutabilityValue
 {
     /**
      * The attribute SHALL NOT be modified.

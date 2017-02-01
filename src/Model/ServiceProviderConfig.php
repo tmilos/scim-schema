@@ -11,148 +11,63 @@
 
 namespace Tmilos\ScimSchema\Model;
 
-use Doctrine\Common\Collections\Collection;
 use Tmilos\ScimSchema\Model\SPC\Bulk;
 
-class ServiceProviderConfig extends AbstractResource
+class ServiceProviderConfig extends Resource
 {
     /** @var string */
     protected $documentationUri;
 
-    /** @var bool */
-    protected $patchSupported;
-
-    /** @var bool */
-    protected $bulkSupported;
-
-    /** @var int */
-    protected $bulkMaxOperations;
-
-    /** @var int */
-    protected $bulkMaxPayloadSize;
-
-    /** @var false */
-    protected $filterSupported;
-
-    /** @var int */
-    protected $filterMaxResults;
-
-    /** @var bool */
-    protected $eTagSupported;
-
-    /** @var bool */
-    protected $changePasswordSupported;
-
-    /** @var bool */
-    protected $sortSupported;
-
-    /** @var array */
-    protected $authenticationSchemes = [];
-
-    // ------------------------
-
     /** @var SPC\Patch */
-    private $patch;
+    protected $patch;
 
     /** @var SPC\Bulk */
-    private $bulk;
+    protected $bulk;
 
     /** @var SPC\Filter */
-    private $filter;
+    protected $filter;
 
     /** @var SPC\ETag */
-    private $eTag;
+    protected $eTag;
 
     /** @var SPC\ChangePassword */
-    private $changePassword;
+    protected $changePassword;
 
     /** @var SPC\Sort */
-    private $sort;
+    protected $sort;
+
+    /** @var SPC\AuthenticationScheme[] */
+    protected $authenticationSchemes;
 
     /**
-     * @param string $documentationUri
-     * @param bool   $patchSupported
-     * @param bool   $bulkSupported
-     * @param int    $bulkMaxOperations
-     * @param int    $bulkMaxPayloadSize
-     * @param false  $filterSupported
-     * @param int    $filterMaxResults
-     * @param bool   $eTagSupported
-     * @param bool   $changePasswordSupported
-     * @param bool   $sortSupported
-     * @param array  $authenticationSchemes
+     * @param string                     $documentationUri
+     * @param bool                       $patchSupported
+     * @param bool                       $bulkSupported
+     * @param int                        $bulkMaxOperations
+     * @param int                        $bulkMaxPayloadSize
+     * @param false                      $filterSupported
+     * @param int                        $filterMaxResults
+     * @param bool                       $eTagSupported
+     * @param bool                       $changePasswordSupported
+     * @param bool                       $sortSupported
+     * @param SPC\AuthenticationScheme[] $authenticationSchemes
      */
     public function __construct($documentationUri, $patchSupported, $bulkSupported, $bulkMaxOperations, $bulkMaxPayloadSize, $filterSupported, $filterMaxResults, $eTagSupported, $changePasswordSupported, $sortSupported, array $authenticationSchemes)
     {
-        parent::__construct('ServiceProviderConfig', [Schema::SERVICE_PROVIDER_CONFIG], ResourceType::SERVICE_PROVIDER_CONFIG);
+        parent::__construct();
+
+        $this->id = 'ServiceProviderConfig';
+        $this->schemas = [Schema::SERVICE_PROVIDER_CONFIG];
+        $this->meta = new Meta(ResourceType::SERVICE_PROVIDER_CONFIG);
 
         $this->documentationUri = $documentationUri;
-        $this->patchSupported = (bool) $patchSupported;
-        $this->bulkSupported = (bool) $bulkSupported;
-        $this->bulkMaxOperations = (int) $bulkMaxOperations;
-        $this->bulkMaxPayloadSize = (int) $bulkMaxPayloadSize;
-        $this->filterSupported = (bool) $filterSupported;
-        $this->filterMaxResults = (int) $filterMaxResults;
-        $this->eTagSupported = (bool) $eTagSupported;
-        $this->changePasswordSupported = (bool) $changePasswordSupported;
-        $this->sortSupported = (bool) $sortSupported;
+        $this->patch = new SPC\Patch($patchSupported);
+        $this->bulk = new SPC\Bulk($bulkSupported, $bulkMaxOperations, $bulkMaxPayloadSize);
+        $this->filter = new SPC\Filter($filterSupported, $filterMaxResults);
+        $this->eTag = new SPC\ETag($eTagSupported);
+        $this->changePassword = new SPC\ChangePassword($changePasswordSupported);
+        $this->sort = new SPC\Sort($sortSupported);
         $this->authenticationSchemes = $authenticationSchemes;
-    }
-
-    /**
-     * @param array $arr
-     *
-     * @return ServiceProviderConfig
-     */
-    public static function fromArray(array $arr)
-    {
-        /** @var ServiceProviderConfig $result */
-        $result = parent::fromArray($arr);
-
-        if (isset($arr['documentationUri'])) {
-            $result->documentationUri = $arr['documentationUri'];
-        }
-
-        if (isset($arr['patch']['supported'])) {
-            $result->patchSupported = $arr['patch']['supported'];
-        }
-
-        if (isset($arr['bulk']['supported'])) {
-            $result->bulkSupported = $arr['bulk']['supported'];
-        }
-        if (isset($arr['bulk']['maxOperations'])) {
-            $result->bulkMaxOperations = $arr['bulk']['maxOperations'];
-        }
-        if (isset($arr['bulk']['maxPayloadSize'])) {
-            $result->bulkMaxPayloadSize = $arr['bulk']['maxPayloadSize'];
-        }
-
-        if (isset($arr['filter']['supported'])) {
-            $result->filterSupported = $arr['filter']['supported'];
-        }
-        if (isset($arr['filter']['maxResults'])) {
-            $result->filterMaxResults = $arr['filter']['maxResults'];
-        }
-
-        if (isset($arr['etag']['supported'])) {
-            $result->eTagSupported = $arr['etag']['supported'];
-        }
-
-        if (isset($arr['changePassword']['supported'])) {
-            $result->changePasswordSupported = $arr['changePassword']['supported'];
-        }
-
-        if (isset($arr['sort']['supported'])) {
-            $result->sortSupported = $arr['sort']['supported'];
-        }
-
-        if (isset($arr['authenticationSchemes'])) {
-            foreach ($arr['authenticationSchemes'] as $authenticationScheme) {
-                $result->authenticationSchemes[] = SPC\AuthenticationScheme::fromArray($authenticationScheme);
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -168,10 +83,6 @@ class ServiceProviderConfig extends AbstractResource
      */
     public function getPatch()
     {
-        if (!$this->patch) {
-            $this->patch = new SPC\Patch($this->patchSupported);
-        }
-
         return $this->patch;
     }
 
@@ -180,10 +91,6 @@ class ServiceProviderConfig extends AbstractResource
      */
     public function getBulk()
     {
-        if (!$this->bulk) {
-            $this->bulk = new Bulk($this->bulkSupported, $this->bulkMaxOperations, $this->bulkMaxPayloadSize);
-        }
-
         return $this->bulk;
     }
 
@@ -192,10 +99,6 @@ class ServiceProviderConfig extends AbstractResource
      */
     public function getFilter()
     {
-        if (!$this->filter) {
-            $this->filter = new SPC\Filter($this->filterSupported, $this->filterMaxResults);
-        }
-
         return $this->filter;
     }
 
@@ -204,10 +107,6 @@ class ServiceProviderConfig extends AbstractResource
      */
     public function getETag()
     {
-        if (!$this->eTag) {
-            $this->eTag = new SPC\ETag($this->eTagSupported);
-        }
-
         return $this->eTag;
     }
 
@@ -216,10 +115,6 @@ class ServiceProviderConfig extends AbstractResource
      */
     public function getChangePassword()
     {
-        if (!$this->changePassword) {
-            $this->changePassword = new SPC\ChangePassword($this->changePasswordSupported);
-        }
-
         return $this->changePassword;
     }
 
@@ -228,50 +123,62 @@ class ServiceProviderConfig extends AbstractResource
      */
     public function getSort()
     {
-        if (!$this->sort) {
-            $this->sort = new SPC\Sort($this->sortSupported);
-        }
-
         return $this->sort;
     }
 
     /**
-     * @return SPC\AuthenticationScheme[]|Collection
+     * @return SPC\AuthenticationScheme[]
      */
     public function getAuthenticationSchemes()
     {
-        if ($this->authenticationSchemes instanceof Collection) {
-            return $this->authenticationSchemes;
-        }
-
-        if ($this->authenticationSchemes === null) {
-            $this->authenticationSchemes = [];
-        }
-        foreach ($this->authenticationSchemes as $k => $v) {
-            if (is_array($v)) {
-                $this->authenticationSchemes[$k] = SPC\AuthenticationScheme::fromArray($v);
-            }
-        }
-
         return $this->authenticationSchemes;
     }
 
-    public function toArray()
+    public function serializeObject()
     {
-        $result = parent::toArray();
+        $result = parent::serializeObject();
 
         if ($this->documentationUri) {
             $result['documentationUri'] = $this->documentationUri;
         }
-        $result['patch'] = $this->getPatch()->toArray();
-        $result['bulk'] = $this->getBulk()->toArray();
-        $result['filter'] = $this->getFilter()->toArray();
-        $result['etag'] = $this->getETag()->toArray();
-        $result['changePassword'] = $this->getChangePassword()->toArray();
-        $result['sort'] = $this->getSort()->toArray();
+        $result['patch'] = $this->getPatch()->serializeObject();
+        $result['bulk'] = $this->getBulk()->serializeObject();
+        $result['filter'] = $this->getFilter()->serializeObject();
+        $result['etag'] = $this->getETag()->serializeObject();
+        $result['changePassword'] = $this->getChangePassword()->serializeObject();
+        $result['sort'] = $this->getSort()->serializeObject();
         $result['authenticationSchemes'] = [];
         foreach ($this->getAuthenticationSchemes() as $authenticationScheme) {
-            $result['authenticationSchemes'][] = $authenticationScheme->toArray();
+            $result['authenticationSchemes'][] = $authenticationScheme->serializeObject();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return ServiceProviderConfig
+     */
+    public static function deserializeObject(array $data)
+    {
+        /** @var ServiceProviderConfig $result */
+        $result = self::deserializeCommonAttributes($data);
+
+        if (isset($data['documentationUri'])) {
+            $result->documentationUri = $data['documentationUri'];
+        }
+        $result->patch = SPC\Patch::deserializeObject($data['patch']);
+        $result->bulk = SPC\Bulk::deserializeObject($data['bulk']);
+        $result->filter = SPC\Filter::deserializeObject($data['filter']);
+        $result->eTag = SPC\ETag::deserializeObject($data['etag']);
+        $result->changePassword = SPC\ChangePassword::deserializeObject($data['changePassword']);
+        $result->sort = SPC\Sort::deserializeObject($data['sort']);
+
+        if (isset($data['authenticationSchemes'])) {
+            foreach ($data['authenticationSchemes'] as $authenticationScheme) {
+                $result->authenticationSchemes[] = SPC\AuthenticationScheme::deserializeObject($authenticationScheme);
+            }
         }
 
         return $result;

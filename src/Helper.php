@@ -11,8 +11,27 @@
 
 namespace Tmilos\ScimSchema;
 
+use Tmilos\ScimSchema\Model\Schema\Attribute;
+
 abstract class Helper
 {
+    /**
+     * @param string      $name
+     * @param Attribute[] $attributes
+     *
+     * @return Attribute|null
+     */
+    public static function findAttribute($name, $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            if ($attribute->getName() === $name) {
+                return $attribute;
+            }
+        }
+
+        return null;
+    }
+
     public static function dateTime2string(\DateTime $dateTime)
     {
         if ($dateTime->getTimezone()->getName() === \DateTimeZone::UTC) {
