@@ -12,6 +12,7 @@
 namespace Tmilos\ScimSchema\Model\Schema;
 
 use Tmilos\ScimSchema\Model\SerializableInterface;
+use Tmilos\ScimSchema\ScimConstants;
 
 class Attribute implements SerializableInterface
 {
@@ -40,13 +41,13 @@ class Attribute implements SerializableInterface
     protected $caseExact = false;
 
     /** @var string */
-    protected $mutability = MutabilityValue::READ_WRITE;
+    protected $mutability = ScimConstants::MUTABILITY_READ_WRITE;
 
     /** @var string */
-    protected $returned = ReturnedValue::ALWAYS;
+    protected $returned = ScimConstants::RETURNED_ALWAYS;
 
     /** @var string */
-    protected $uniqueness = UniquenessValue::NONE;
+    protected $uniqueness = ScimConstants::UNIQUENESS_NONE;
 
     /** @var string[] */
     protected $referenceTypes = [];
@@ -90,7 +91,7 @@ class Attribute implements SerializableInterface
         $this->mutability = $mutability;
         $this->returned = $returned;
         $this->uniqueness = $uniqueness;
-        $this->referenceTypes = $referenceTypes;
+        $this->referenceTypes = $referenceTypes === null ? [] : $referenceTypes;
     }
 
     /**
@@ -205,6 +206,21 @@ class Attribute implements SerializableInterface
         return null;
     }
 
+    public function isValueValid($value)
+    {
+        switch ($this->type) {
+            case ScimConstants::ATTRIBUTE_TYPE_STRING: return is_string($value);
+            case ScimConstants::ATTRIBUTE_TYPE_BOOLEAN: return is_bool($value);
+            case ScimConstants::ATTRIBUTE_TYPE_DECIMAL: return is_float($value) || is_int($value);
+            case ScimConstants::ATTRIBUTE_TYPE_INTEGER: return is_int($value);
+            case ScimConstants::ATTRIBUTE_TYPE_DATETIME: return $value instanceof \DateTime;  // improve this
+            case ScimConstants::ATTRIBUTE_TYPE_BINARY: return true;
+            case ScimConstants::ATTRIBUTE_TYPE_REFERENCE: return is_string($value); // improve this
+            case ScimConstants::ATTRIBUTE_TYPE_COMPLEX: return is_array($value) || is_object($value);
+            default: throw new \LogicException('Unrecognized attribute type: '.$this->type);
+        }
+    }
+
     /**
      * @return array
      */
@@ -220,7 +236,7 @@ class Attribute implements SerializableInterface
         $result['mutability'] = $this->mutability;
         $result['returned'] = $this->returned;
 
-        if ($this->type !== AttributeTypeValue::BOOLEAN) {
+        if ($this->type !== ScimConstants::ATTRIBUTE_TYPE_BOOLEAN) {
             $result['uniqueness'] = $this->uniqueness;
         }
 
@@ -264,12 +280,12 @@ class Attribute implements SerializableInterface
             $data['required'],
             isset($data['description']) ? $data['description'] : null,
             $subAttributes,
-            isset($data['canonicalValues']) ? $data['canonicalValues'] : null,
+            isset($data['canonicalValues']) ? $data['canonicalValues'] : [],
             isset($data['caseExact']) ? $data['caseExact'] : false,
             $data['mutability'],
             $data['returned'],
             isset($data['uniqueness']) ? $data['uniqueness'] : null,
-            isset($data['referenceTypes']) ? $data['referenceTypes'] : null
+            isset($data['referenceTypes']) ? $data['referenceTypes'] : []
         );
 
         return $result;

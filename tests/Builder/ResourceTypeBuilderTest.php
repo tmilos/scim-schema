@@ -1,8 +1,9 @@
 <?php
 
-namespace Tmilos\ScimSchema\Builder;
+namespace Tests\Tmilos\ScimSchema\Builder;
 
-use Tmilos\ScimSchema\Model\ResourceType;
+use Tmilos\ScimSchema\Builder\ResourceTypeBuilder;
+use Tmilos\ScimSchema\ScimConstants;
 
 class ResourceTypeBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,11 +11,11 @@ class ResourceTypeBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new ResourceTypeBuilder();
         $resourceTypes = [];
-        $resourceTypes[] = $builder->build(ResourceType::GROUP)->serializeObject();
-        $resourceTypes[] = $builder->build(ResourceType::SERVICE_PROVIDER_CONFIG)->serializeObject();
-        $resourceTypes[] = $builder->build(ResourceType::USER)->serializeObject();
-        $resourceTypes[] = $builder->build(ResourceType::SCHEMA)->serializeObject();
-        $resourceTypes[] = $builder->build(ResourceType::RESOURCE_TYPE)->serializeObject();
+        $resourceTypes[] = $builder->build(ScimConstants::RESOURCE_TYPE_GROUP)->serializeObject();
+        $resourceTypes[] = $builder->build(ScimConstants::RESOURCE_TYPE_SERVICE_PROVIDER_CONFIG)->serializeObject();
+        $resourceTypes[] = $builder->build(ScimConstants::RESOURCE_TYPE_USER)->serializeObject();
+        $resourceTypes[] = $builder->build(ScimConstants::RESOURCE_TYPE_SCHEMA)->serializeObject();
+        $resourceTypes[] = $builder->build(ScimConstants::RESOURCE_TYPE_RESOURCE_TYPE)->serializeObject();
 
         $this->assertEquals($this->getExpected(), $resourceTypes);
     }

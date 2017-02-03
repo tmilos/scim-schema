@@ -9,16 +9,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model;
+namespace Tmilos\ScimSchema\Model\v2;
+
+use Tmilos\ScimSchema\Model\Resource;
+use Tmilos\ScimSchema\ScimConstants;
+use Tmilos\ScimSchema\ScimConstantsV2;
 
 class ResourceType extends Resource
 {
-    const SCHEMA = 'Schema';
-    const RESOURCE_TYPE = 'ResourceType';
-    const SERVICE_PROVIDER_CONFIG = 'ServiceProviderConfig';
-    const GROUP = 'Group';
-    const USER = 'User';
-
     /** @var string */
     protected $name;
 
@@ -38,16 +36,14 @@ class ResourceType extends Resource
      */
     protected $schemaExtensions;
 
-    /**
-     * @param string $id
-     */
-    public function __construct($id)
+    public function getResourceType()
     {
-        parent::__construct();
+        return ScimConstants::RESOURCE_TYPE_RESOURCE_TYPE;
+    }
 
-        $this->id = $id;
-        $this->schemas = [Schema::RESOURCE_TYPE];
-        $this->meta = new Meta(static::RESOURCE_TYPE);
+    public function getSchemaId()
+    {
+        return ScimConstantsV2::SCHEMA_RESOURCE_TYPE;
     }
 
     /**

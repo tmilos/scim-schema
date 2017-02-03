@@ -13,8 +13,8 @@ namespace Tmilos\ScimSchema\Validator;
 
 use Tmilos\ScimSchema\Helper;
 use Tmilos\ScimSchema\Model\Schema\Attribute;
-use Tmilos\ScimSchema\Model\Schema\AttributeTypeValue;
 use Tmilos\ScimSchema\Model\Schema;
+use Tmilos\ScimSchema\ScimConstants;
 
 class SchemaValidator
 {
@@ -90,7 +90,7 @@ class SchemaValidator
                 if ($attribute->isMultiValued()) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is defined in schema as multi-valued, but got object');
                     continue;
-                } elseif ($attribute->getType() !== AttributeTypeValue::COMPLEX) {
+                } elseif ($attribute->getType() !== ScimConstants::ATTRIBUTE_TYPE_COMPLEX) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is not defined in schema as complex, but got object');
                     continue;
                 }
@@ -99,10 +99,10 @@ class SchemaValidator
                 if ($attribute->isMultiValued()) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is defined in schema as multi-valued, but got scalar');
                     continue;
-                } elseif ($attribute->getType() === AttributeTypeValue::COMPLEX) {
+                } elseif ($attribute->getType() === ScimConstants::ATTRIBUTE_TYPE_COMPLEX) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, 'Attribute is defined in schema as complex, but got scalar');
                     continue;
-                } elseif (!AttributeTypeValue::isValueValid($value, $attribute->getType())) {
+                } elseif (!$attribute->isValueValid($value)) {
                     $validationResult->add($propertyName, $parentPath, $schemaId, sprintf('Attribute has invalid value for type "%s"', $attribute->getType()));
                     continue;
                 }

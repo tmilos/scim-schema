@@ -5,41 +5,33 @@
     "id": "urn:ietf:params:scim:schemas:core:2.0:Schema",
     "meta": {
         "resourceType": "Schema",
-        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:core:2.0:Schema"
+        "created": "2001-01-01T00:00:00+00:00",
+        "lastModified": "2001-01-01T00:00:00+00:00",
+        "version": "W/\"9F2C753BE314F95593B8B16669E0191653049038\"",
+        "location": "http://localhost/v2/schemas/urn:ietf:params:scim:schemas:core:2.0:Schema"
     },
     "name": "Schema",
-    "description": "Specifies the schema that describes a SCIM schema",
+    "description": "Specifies the schema that describes a SCIM schema.",
     "attributes": [
         {
-            "name": "id",
-            "description": "The unique URI of the schema. When applicable, service providers MUST specify the URI.",
-            "type": "string",
-            "mutability": "readOnly",
-            "returned": "default",
-            "uniqueness": "none",
-            "required": true,
-            "multiValued": false,
-            "caseExact": false
-        },
-        {
             "name": "name",
-            "description": "The schema's human-readable name.  When applicable, service providers MUST specify the name, e.g., 'User'.",
+            "description": "The schema's human-readable name. When applicable, service providers MUST specify the name, e.g., 'User'.",
             "type": "string",
             "mutability": "readOnly",
             "returned": "default",
             "uniqueness": "none",
-            "required": true,
+            "required": false,
             "multiValued": false,
             "caseExact": false
         },
         {
             "name": "description",
-            "description": "The schema's human-readable name.  When applicable, service providers MUST specify the name, e.g., 'User'.",
+            "description": "The schema's human-readable description. When applicable, service providers MUST specify the description.",
             "type": "string",
             "mutability": "readOnly",
             "returned": "default",
             "uniqueness": "none",
-            "required": true,
+            "required": false,
             "multiValued": false,
             "caseExact": false
         },
@@ -67,14 +59,14 @@
                 },
                 {
                     "name": "type",
-                    "description": "The attribute's data type. Valid values include 'string', 'complex', 'boolean', 'decimal', 'integer', 'dateTime', 'reference'.",
+                    "description": "The attribute's data type. Valid values include 'string', 'complex', 'boolean', 'decimal', 'integer', 'dateTime', 'reference', 'binary'.",
                     "type": "string",
                     "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": true,
                     "multiValued": false,
-                    "caseExact": true,
+                    "caseExact": false,
                     "canonicalValues": [
                         "string",
                         "complex",
@@ -82,18 +74,9 @@
                         "decimal",
                         "integer",
                         "dateTime",
-                        "reference"
+                        "reference",
+                        "binary"
                     ]
-                },
-                {
-                    "name": "multiValued",
-                    "description": "A Boolean value indicating an attribute's plurality.",
-                    "type": "boolean",
-                    "mutability": "readOnly",
-                    "returned": "default",
-                    "required": true,
-                    "multiValued": false,
-                    "caseExact": false
                 },
                 {
                     "name": "description",
@@ -107,8 +90,18 @@
                     "caseExact": false
                 },
                 {
+                    "name": "multiValued",
+                    "description": "A Boolean value indicating an attribute's plurality.",
+                    "type": "boolean",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "required": true,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
                     "name": "required",
-                    "description": "A boolean value indicating whether or not the attribute is required.",
+                    "description": "A Boolean value indicating whether or not the attribute is required.",
                     "type": "boolean",
                     "mutability": "readOnly",
                     "returned": "default",
@@ -119,13 +112,13 @@
                 {
                     "name": "canonicalValues",
                     "description": "A collection of canonical values. When applicable, service providers MUST specify the canonical types, e.g., 'work', 'home'.",
-                    "type": "string",
+                    "type": "complex",
                     "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": true,
-                    "caseExact": true
+                    "caseExact": false
                 },
                 {
                     "name": "caseExact",
@@ -146,7 +139,7 @@
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": false,
-                    "caseExact": true,
+                    "caseExact": false,
                     "canonicalValues": [
                         "readOnly",
                         "readWrite",
@@ -163,7 +156,7 @@
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": false,
-                    "caseExact": true,
+                    "caseExact": false,
                     "canonicalValues": [
                         "always",
                         "never",
@@ -180,7 +173,7 @@
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": false,
-                    "caseExact": true,
+                    "caseExact": false,
                     "canonicalValues": [
                         "none",
                         "server",
@@ -189,14 +182,14 @@
                 },
                 {
                     "name": "referenceTypes",
-                    "description": "Used only with an attribute of type 'reference'.  Specifies a SCIM resourceType that a reference attribute MAY refer to, e.g., 'User'.",
+                    "description": "Used only with an attribute of type 'reference'. Specifies a SCIM resourceType that a reference attribute MAY refer to, e.g., 'User'.",
                     "type": "string",
                     "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
-                    "multiValued": false,
-                    "caseExact": true,
+                    "multiValued": true,
+                    "caseExact": false,
                     "canonicalValues": [
                         "scim",
                         "external",
@@ -229,14 +222,14 @@
                         },
                         {
                             "name": "type",
-                            "description": "The attribute's data type. Valid values include 'string', 'complex', 'boolean', 'decimal', 'integer', 'dateTime', 'reference'.",
+                            "description": "The attribute's data type. Valid values include 'string', 'complex', 'boolean', 'decimal', 'integer', 'dateTime', 'reference', 'binary'.",
                             "type": "string",
                             "mutability": "readOnly",
                             "returned": "default",
                             "uniqueness": "none",
                             "required": true,
                             "multiValued": false,
-                            "caseExact": true,
+                            "caseExact": false,
                             "canonicalValues": [
                                 "string",
                                 "complex",
@@ -244,18 +237,9 @@
                                 "decimal",
                                 "integer",
                                 "dateTime",
-                                "reference"
+                                "reference",
+                                "binary"
                             ]
-                        },
-                        {
-                            "name": "multiValued",
-                            "description": "A Boolean value indicating an attribute's plurality.",
-                            "type": "boolean",
-                            "mutability": "readOnly",
-                            "returned": "default",
-                            "required": true,
-                            "multiValued": false,
-                            "caseExact": false
                         },
                         {
                             "name": "description",
@@ -269,8 +253,18 @@
                             "caseExact": false
                         },
                         {
+                            "name": "multiValued",
+                            "description": "A Boolean value indicating an attribute's plurality.",
+                            "type": "boolean",
+                            "mutability": "readOnly",
+                            "returned": "default",
+                            "required": true,
+                            "multiValued": false,
+                            "caseExact": false
+                        },
+                        {
                             "name": "required",
-                            "description": "A boolean value indicating whether or not the attribute is required.",
+                            "description": "A Boolean value indicating whether or not the attribute is required.",
                             "type": "boolean",
                             "mutability": "readOnly",
                             "returned": "default",
@@ -281,13 +275,13 @@
                         {
                             "name": "canonicalValues",
                             "description": "A collection of canonical values. When applicable, service providers MUST specify the canonical types, e.g., 'work', 'home'.",
-                            "type": "string",
+                            "type": "complex",
                             "mutability": "readOnly",
                             "returned": "default",
                             "uniqueness": "none",
                             "required": false,
                             "multiValued": true,
-                            "caseExact": true
+                            "caseExact": false
                         },
                         {
                             "name": "caseExact",
@@ -308,7 +302,7 @@
                             "uniqueness": "none",
                             "required": false,
                             "multiValued": false,
-                            "caseExact": true,
+                            "caseExact": false,
                             "canonicalValues": [
                                 "readOnly",
                                 "readWrite",
@@ -325,7 +319,7 @@
                             "uniqueness": "none",
                             "required": false,
                             "multiValued": false,
-                            "caseExact": true,
+                            "caseExact": false,
                             "canonicalValues": [
                                 "always",
                                 "never",
@@ -342,7 +336,7 @@
                             "uniqueness": "none",
                             "required": false,
                             "multiValued": false,
-                            "caseExact": true,
+                            "caseExact": false,
                             "canonicalValues": [
                                 "none",
                                 "server",
@@ -351,14 +345,14 @@
                         },
                         {
                             "name": "referenceTypes",
-                            "description": "Used only with an attribute of type 'reference'.  Specifies a SCIM resourceType that a reference attribute MAY refer to, e.g., 'User'.",
+                            "description": "Used only with an attribute of type 'reference'. Specifies a SCIM resourceType that a reference attribute MAY refer to, e.g., 'User'.",
                             "type": "string",
                             "mutability": "readOnly",
                             "returned": "default",
                             "uniqueness": "none",
                             "required": false,
-                            "multiValued": false,
-                            "caseExact": true,
+                            "multiValued": true,
+                            "caseExact": false,
                             "canonicalValues": [
                                 "scim",
                                 "external",

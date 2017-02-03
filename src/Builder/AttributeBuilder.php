@@ -12,9 +12,7 @@
 namespace Tmilos\ScimSchema\Builder;
 
 use Tmilos\ScimSchema\Model\Schema\Attribute;
-use Tmilos\ScimSchema\Model\Schema\MutabilityValue;
-use Tmilos\ScimSchema\Model\Schema\ReturnedValue;
-use Tmilos\ScimSchema\Model\Schema\UniquenessValue;
+use Tmilos\ScimSchema\ScimConstants;
 
 class AttributeBuilder
 {
@@ -73,9 +71,9 @@ class AttributeBuilder
 
     protected function __construct()
     {
-        $this->mutability = MutabilityValue::READ_WRITE;
-        $this->returned = ReturnedValue::BY_DEFAULT;
-        $this->uniqueness = UniquenessValue::NONE;
+        $this->mutability = ScimConstants::MUTABILITY_READ_WRITE;
+        $this->returned = ScimConstants::RETURNED_DEFAULT;
+        $this->uniqueness = ScimConstants::UNIQUENESS_NONE;
     }
 
     /**

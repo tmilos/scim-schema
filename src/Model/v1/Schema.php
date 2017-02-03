@@ -9,13 +9,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tmilos\ScimSchema\Model\Schema;
+namespace Tmilos\ScimSchema\Model\v1;
 
-abstract class ReferenceTypeValue
+use Tmilos\ScimSchema\ScimConstantsV1;
+
+class Schema extends \Tmilos\ScimSchema\Model\Schema
 {
-    const SCIM = 'scim';
-    const USER = 'User';
-    const GROUP = 'Group';
-    const EXTERNAL = 'external';
-    const URI = 'uri';
+    public function getSchemaId()
+    {
+        return ScimConstantsV1::SCHEMA_SCHEMA;
+    }
 }

@@ -5,7 +5,10 @@
     "id": "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig",
     "meta": {
         "resourceType": "Schema",
-        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+        "created": "2001-01-01T00:00:00+00:00",
+        "lastModified": "2001-01-01T00:00:00+00:00",
+        "version": "W/\"96A2414FE73EC8C63FD54E9CB681821DF467D94D\"",
+        "location": "http://localhost/v2/schemas/urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
     },
     "name": "Service Provider Configuration",
     "description": "Schema for representing the service provider's configuration",
@@ -151,7 +154,7 @@
         },
         {
             "name": "sort",
-            "description": "A complex type that specifies sort result options.",
+            "description": "A complex type that specifies sort configuration options.",
             "type": "complex",
             "mutability": "readOnly",
             "returned": "default",
@@ -174,7 +177,7 @@
         },
         {
             "name": "etag",
-            "description": "A complex type that specifies etag options",
+            "description": "A complex type that specifies etag configuration options.",
             "type": "complex",
             "mutability": "readOnly",
             "returned": "default",
@@ -197,7 +200,7 @@
         },
         {
             "name": "authenticationSchemes",
-            "description": "A complex type that specifies supported authentication scheme properties.",
+            "description": "A multi-valued complex type that specifies supported authentication scheme properties.",
             "type": "complex",
             "mutability": "readOnly",
             "returned": "default",

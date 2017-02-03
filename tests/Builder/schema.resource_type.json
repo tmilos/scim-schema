@@ -5,25 +5,17 @@
     "id": "urn:ietf:params:scim:schemas:core:2.0:ResourceType",
     "meta": {
         "resourceType": "Schema",
-        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:core:2.0:ResourceType"
+        "created": "2001-01-01T00:00:00+00:00",
+        "lastModified": "2001-01-01T00:00:00+00:00",
+        "version": "W/\"DB7B1335326DD0B77C0DDB33392C6AF3789E1AB3\"",
+        "location": "http://localhost/v2/schemas/urn:ietf:params:scim:schemas:core:2.0:ResourceType"
     },
     "name": "ResourceType",
-    "description": "Specifies the schema that describes a SCIM resource type",
+    "description": "Specifies the schema that describes a SCIM resource type.",
     "attributes": [
         {
-            "name": "id",
-            "description": "The resource type's server unique id. May be the same as the 'name' attribute.",
-            "type": "string",
-            "mutability": "readOnly",
-            "returned": "default",
-            "uniqueness": "none",
-            "required": false,
-            "multiValued": false,
-            "caseExact": false
-        },
-        {
             "name": "name",
-            "description": "The resource type name.  When applicable, service providers MUST specify the name, e.g., 'User'.",
+            "description": "The resource type name. When applicable, service providers MUST specify the name, e.g., 'User'.",
             "type": "string",
             "mutability": "readOnly",
             "returned": "default",
@@ -45,31 +37,25 @@
         },
         {
             "name": "endpoint",
-            "description": "The resource type's HTTP-addressable endpoint relative to the Base URL, e.g., '/Users'.",
-            "type": "reference",
+            "description": "The resource type's HTTP-addressable endpoint relative to the Base URL of the service provider, e.g., \"Users\".",
+            "type": "string",
             "mutability": "readOnly",
             "returned": "default",
             "uniqueness": "none",
             "required": true,
             "multiValued": false,
-            "caseExact": false,
-            "referenceTypes": [
-                "uri"
-            ]
+            "caseExact": false
         },
         {
             "name": "schema",
             "description": "The resource type's primary/base schema URI.",
-            "type": "reference",
+            "type": "string",
             "mutability": "readOnly",
             "returned": "default",
             "uniqueness": "none",
             "required": true,
             "multiValued": false,
-            "caseExact": true,
-            "referenceTypes": [
-                "uri"
-            ]
+            "caseExact": false
         },
         {
             "name": "schemaExtensions",
@@ -78,27 +64,24 @@
             "mutability": "readOnly",
             "returned": "default",
             "uniqueness": "none",
-            "required": true,
+            "required": false,
             "multiValued": true,
             "caseExact": false,
             "subAttributes": [
                 {
                     "name": "schema",
-                    "description": "The URI of a schema extension.",
-                    "type": "reference",
+                    "description": "The URI of an extended schema, e.g., \"urn:edu:2.0:Staff\". This MUST be equal to the \"id\" attribute of a \"Schema\" resource.",
+                    "type": "string",
                     "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": true,
                     "multiValued": false,
-                    "caseExact": true,
-                    "referenceTypes": [
-                        "uri"
-                    ]
+                    "caseExact": false
                 },
                 {
                     "name": "required",
-                    "description": "A Boolean value that specifies whether or not the schema extension is required for the resource type.  If true, a resource of this type MUST include this schema extension and also include any attributes declared as required in this schema extension. If false, a resource of this type MAY omit this schema extension.",
+                    "description": "A Boolean value that specifies whether or not the schema extension is required for the resource type. If true, a resource of this type MUST include this schema extension and also include any attributes declared as required in this schema extension. If false, a resource of this type MAY omit this schema extension.",
                     "type": "boolean",
                     "mutability": "readOnly",
                     "returned": "default",

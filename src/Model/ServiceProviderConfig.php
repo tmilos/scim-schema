@@ -12,8 +12,9 @@
 namespace Tmilos\ScimSchema\Model;
 
 use Tmilos\ScimSchema\Model\SPC\Bulk;
+use Tmilos\ScimSchema\ScimConstants;
 
-class ServiceProviderConfig extends Resource
+abstract class ServiceProviderConfig extends Resource
 {
     /** @var string */
     protected $documentationUri;
@@ -54,11 +55,7 @@ class ServiceProviderConfig extends Resource
      */
     public function __construct($documentationUri, $patchSupported, $bulkSupported, $bulkMaxOperations, $bulkMaxPayloadSize, $filterSupported, $filterMaxResults, $eTagSupported, $changePasswordSupported, $sortSupported, array $authenticationSchemes)
     {
-        parent::__construct();
-
-        $this->id = 'ServiceProviderConfig';
-        $this->schemas = [Schema::SERVICE_PROVIDER_CONFIG];
-        $this->meta = new Meta(ResourceType::SERVICE_PROVIDER_CONFIG);
+        parent::__construct('ServiceProviderConfig');
 
         $this->documentationUri = $documentationUri;
         $this->patch = new SPC\Patch($patchSupported);
@@ -68,6 +65,11 @@ class ServiceProviderConfig extends Resource
         $this->changePassword = new SPC\ChangePassword($changePasswordSupported);
         $this->sort = new SPC\Sort($sortSupported);
         $this->authenticationSchemes = $authenticationSchemes;
+    }
+
+    public function getResourceType()
+    {
+        return ScimConstants::RESOURCE_TYPE_SERVICE_PROVIDER_CONFIG;
     }
 
     /**

@@ -1,14 +1,15 @@
 <?php
 
-namespace Tmilos\ScimSchema\Builder;
+namespace Tests\Tmilos\ScimSchema\Builder;
 
+use Tmilos\ScimSchema\Builder\ServiceProviderConfigBuilderV2;
 use Tmilos\ScimSchema\Model\SPC\AuthenticationScheme;
 
 class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function test_builds_default_service_provider_config()
     {
-        $builder = new ServiceProviderConfigBuilder();
+        $builder = new ServiceProviderConfigBuilderV2();
         $spc = $builder->buildServiceProviderConfig();
         $arr = $spc->serializeObject();
 
@@ -17,7 +18,7 @@ class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function test_builds_custom_service_provider_config()
     {
-        $builder = new ServiceProviderConfigBuilder();
+        $builder = new ServiceProviderConfigBuilderV2();
         $builder
             ->setDocumentationUri('http://localhost/doc.html')
             ->setPatchSupported(true)

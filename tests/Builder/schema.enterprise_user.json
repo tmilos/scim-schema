@@ -5,7 +5,10 @@
     "id": "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
     "meta": {
         "resourceType": "Schema",
-        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"
+        "created": "2001-01-01T00:00:00+00:00",
+        "lastModified": "2001-01-01T00:00:00+00:00",
+        "version": "W/\"4E3F49246DCA6C2FC7E7F368DD9A15DB2B22C183\"",
+        "location": "http://localhost/v2/schemas/urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"
     },
     "name": "EnterpriseUser",
     "description": "Enterprise User",
@@ -78,7 +81,7 @@
             "subAttributes": [
                 {
                     "name": "value",
-                    "description": "The id of the SCIM resource representing the User's manager.  REQUIRED.",
+                    "description": "The id of the SCIM resource representing the User's manager. REQUIRED.",
                     "type": "string",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -89,12 +92,12 @@
                 },
                 {
                     "name": "$ref",
-                    "description": "The URI of the SCIM resource representing the User's manager.  REQUIRED.",
+                    "description": "The URI of the SCIM resource representing the User's manager.",
                     "type": "reference",
                     "mutability": "readWrite",
                     "returned": "default",
                     "uniqueness": "none",
-                    "required": true,
+                    "required": false,
                     "multiValued": false,
                     "caseExact": false,
                     "referenceTypes": [
@@ -103,7 +106,7 @@
                 },
                 {
                     "name": "displayName",
-                    "description": "The displayName of the User's manager. OPTIONAL and READ-ONLY.",
+                    "description": "The displayName of the User's manager.",
                     "type": "string",
                     "mutability": "readOnly",
                     "returned": "default",

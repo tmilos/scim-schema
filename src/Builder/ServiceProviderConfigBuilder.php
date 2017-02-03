@@ -14,7 +14,7 @@ namespace Tmilos\ScimSchema\Builder;
 use Tmilos\ScimSchema\Model\ServiceProviderConfig;
 use Tmilos\ScimSchema\Model\SPC\AuthenticationScheme;
 
-class ServiceProviderConfigBuilder
+abstract class ServiceProviderConfigBuilder
 {
     /** @var string */
     private $locationBase = 'http://localhost';
@@ -72,24 +72,7 @@ class ServiceProviderConfigBuilder
     /**
      * @return ServiceProviderConfig
      */
-    public function buildServiceProviderConfig()
-    {
-        $result = new ServiceProviderConfig(
-            $this->documentationUri,
-            $this->patchSupported,
-            $this->bulkSupported,
-            $this->bulkMaxOperations,
-            $this->bulkMaxPayloadSize,
-            $this->filterSupported,
-            $this->filterMaxResults,
-            $this->eTagSupported,
-            $this->changePasswordSupported,
-            $this->sortSupported,
-            $this->authenticationSchemes
-        );
-
-        return $result;
-    }
+    abstract public function buildServiceProviderConfig();
 
     /**
      * @param string $documentationUri

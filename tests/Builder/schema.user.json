@@ -5,10 +5,13 @@
     "id": "urn:ietf:params:scim:schemas:core:2.0:User",
     "meta": {
         "resourceType": "Schema",
-        "location": "http://localhost/Schemas/urn:ietf:params:scim:schemas:core:2.0:User"
+        "created": "2001-01-01T00:00:00+00:00",
+        "lastModified": "2001-01-01T00:00:00+00:00",
+        "version": "W/\"5CF43FF3C1E0C85DE1F13305C3B1AC83009FF941\"",
+        "location": "http://localhost/v2/schemas/urn:ietf:params:scim:schemas:core:2.0:User"
     },
     "name": "User",
-    "description": "User Account",
+    "description": "User resource.",
     "attributes": [
         {
             "name": "userName",
@@ -23,7 +26,7 @@
         },
         {
             "name": "name",
-            "description": "The components of the user's real name. Providers MAY return just the full name as a single string in the formatted sub-attribute, or they MAY return just the individual component attributes using the other sub-attributes, or they MAY return both.  If both variants are returned, they SHOULD be describing the same name, with the formatted name indicating how the component attributes should be combined.",
+            "description": "The components of the user's real name. Providers MAY return just the full name as a single string in the formatted sub-attribute, or they MAY return just the individual component attributes using the other sub-attributes, or they MAY return both. If both variants are returned, they SHOULD be describing the same name, with the formatted name indicating how the component attributes should be combined.",
             "type": "complex",
             "mutability": "readWrite",
             "returned": "default",
@@ -102,7 +105,7 @@
         },
         {
             "name": "displayName",
-            "description": "The name of the User, suitable for display to end-users.  The name SHOULD be the full name of the User being described, if known.",
+            "description": "The name of the User, suitable for display to end-users. The name SHOULD be the full name of the User being described, if known.",
             "type": "string",
             "mutability": "readWrite",
             "returned": "default",
@@ -113,7 +116,7 @@
         },
         {
             "name": "nickName",
-            "description": "The casual way to address the user in real life, e.g., 'Bob' or 'Bobby' instead of 'Robert'.  This attribute SHOULD NOT be used to represent a User's username (e.g., 'bjensen' or 'mpepperidge').",
+            "description": "The casual way to address the user in real life, e.g., 'Bob' or 'Bobby' instead of 'Robert'. This attribute SHOULD NOT be used to represent a User's username (e.g., 'bjensen' or 'mpepperidge').",
             "type": "string",
             "mutability": "readWrite",
             "returned": "default",
@@ -169,7 +172,7 @@
         },
         {
             "name": "preferredLanguage",
-            "description": "Indicates the User's preferred written or spoken language.  Generally used for selecting a localized user interface; e.g., 'en_US' specifies the language English and country US.",
+            "description": "Indicates the User's preferred written or spoken language. Generally used for selecting a localized user interface; e.g., 'en-US' specifies the language English and country US.",
             "type": "string",
             "mutability": "readWrite",
             "returned": "default",
@@ -178,9 +181,9 @@
             "multiValued": false,
             "caseExact": false,
             "canonicalValues": [
-                "zh_CN",
-                "en_US",
-                "en_CA"
+                "zh-CN",
+                "en-US",
+                "en-CA"
             ]
         },
         {
@@ -222,13 +225,13 @@
             "type": "boolean",
             "mutability": "readWrite",
             "returned": "default",
-            "required": true,
+            "required": false,
             "multiValued": false,
             "caseExact": false
         },
         {
             "name": "password",
-            "description": "The User's cleartext password.  This attribute is intended to be used as a means to specify an initial password when creating a new User or to reset an existing User's password.",
+            "description": "The User's cleartext password. This attribute is intended to be used as a means to specify an initial password when creating a new User or to reset an existing User's password.",
             "type": "string",
             "mutability": "writeOnly",
             "returned": "never",
@@ -239,18 +242,18 @@
         },
         {
             "name": "emails",
-            "description": "Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.",
+            "description": "Email addresses for the user. The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'.",
             "type": "complex",
             "mutability": "readWrite",
             "returned": "default",
             "uniqueness": "none",
-            "required": true,
+            "required": false,
             "multiValued": true,
             "caseExact": false,
             "subAttributes": [
                 {
                     "name": "value",
-                    "description": "Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'.",
+                    "description": "Email addresses for the user. The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'.",
                     "type": "string",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -263,7 +266,7 @@
                     "name": "display",
                     "description": "Display value for an email",
                     "type": "string",
-                    "mutability": "readWrite",
+                    "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
@@ -288,7 +291,7 @@
                 },
                 {
                     "name": "primary",
-                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred mailing address or primary email address.  The primary attribute value 'true' MUST appear no more than once.",
+                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred mailing address or primary email address. The primary attribute value 'true' MUST appear no more than once.",
                     "type": "boolean",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -300,7 +303,7 @@
         },
         {
             "name": "phoneNumbers",
-            "description": "Phone numbers for the User.  The value SHOULD be canonicalized by the service provider according to the format specified in RFC 3966, e.g., 'tel:+1-201-555-0123'. Canonical type values of 'work', 'home', 'mobile', 'fax', 'pager', and 'other'.",
+            "description": "Phone numbers for the User. The value SHOULD be canonicalized by the service provider according to the format specified in RFC 3966, e.g., 'tel:+1-201-555-0123'.",
             "type": "complex",
             "mutability": "readWrite",
             "returned": "default",
@@ -324,7 +327,7 @@
                     "name": "display",
                     "description": "Display value for a phone number",
                     "type": "string",
-                    "mutability": "readWrite",
+                    "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
@@ -352,7 +355,7 @@
                 },
                 {
                     "name": "primary",
-                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred phone number or primary phone number.  The primary attribute value 'true' MUST appear no more than once.",
+                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred phone number or primary phone number. The primary attribute value 'true' MUST appear no more than once.",
                     "type": "boolean",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -386,9 +389,9 @@
                 },
                 {
                     "name": "display",
-                    "description": "Display value for a IMS",
+                    "description": "Display value for an IMS",
                     "type": "string",
-                    "mutability": "readWrite",
+                    "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
@@ -422,7 +425,7 @@
                 },
                 {
                     "name": "primary",
-                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred messenger or primary messenger.  The primary attribute value 'true' MUST appear no more than once.",
+                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred messenger or primary messenger. The primary attribute value 'true' MUST appear no more than once.",
                     "type": "boolean",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -434,6 +437,7 @@
         },
         {
             "name": "photos",
+            "description": "URLs of photos of the User.",
             "type": "complex",
             "mutability": "readWrite",
             "returned": "default",
@@ -473,7 +477,7 @@
                 },
                 {
                     "name": "primary",
-                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred photo or thumbnail.  The primary attribute value 'true' MUST appear no more than once.",
+                    "description": "A Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred photo or thumbnail. The primary attribute value 'true' MUST appear no more than once.",
                     "type": "boolean",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -485,7 +489,7 @@
         },
         {
             "name": "addresses",
-            "description": "A physical mailing address for this User. Canonical type values of 'work', 'home', and 'other'.  This attribute is a complex type with the following sub-attributes.",
+            "description": "A physical mailing address for this User.",
             "type": "complex",
             "mutability": "readWrite",
             "returned": "default",
@@ -496,7 +500,7 @@
             "subAttributes": [
                 {
                     "name": "formatted",
-                    "description": "The full mailing address, formatted for display or use with a mailing label.  This attribute MAY contain newlines.",
+                    "description": "The full mailing address, formatted for display or use with a mailing label. This attribute MAY contain newlines.",
                     "type": "string",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -507,7 +511,7 @@
                 },
                 {
                     "name": "streetAddress",
-                    "description": "The full street address component, which may include house number, street name, P.O. box, and multi-line extended street address information.  This attribute MAY contain newlines.",
+                    "description": "The full street address component, which may include house number, street name, P.O. box, and multi-line extended street address information. This attribute MAY contain newlines.",
                     "type": "string",
                     "mutability": "readWrite",
                     "returned": "default",
@@ -594,7 +598,7 @@
             "name": "groups",
             "description": "A list of groups to which the user belongs, either through direct membership, through nested groups, or dynamically calculated.",
             "type": "complex",
-            "mutability": "readWrite",
+            "mutability": "readOnly",
             "returned": "default",
             "uniqueness": "none",
             "required": false,
@@ -628,7 +632,7 @@
                 },
                 {
                     "name": "display",
-                    "description": "A human-readable name, primarily used for display purposes.  READ-ONLY.",
+                    "description": "A human-readable name, primarily used for display purposes. READ-ONLY.",
                     "type": "string",
                     "mutability": "readOnly",
                     "returned": "default",
@@ -680,7 +684,7 @@
                     "name": "display",
                     "description": "The display value of an entitlement.",
                     "type": "string",
-                    "mutability": "readWrite",
+                    "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
@@ -696,10 +700,7 @@
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": false,
-                    "caseExact": false,
-                    "canonicalValues": [
-                        "permission"
-                    ]
+                    "caseExact": false
                 },
                 {
                     "name": "primary",
@@ -739,7 +740,7 @@
                     "name": "display",
                     "description": "The display value of a role.",
                     "type": "string",
-                    "mutability": "readWrite",
+                    "mutability": "readOnly",
                     "returned": "default",
                     "uniqueness": "none",
                     "required": false,
@@ -755,10 +756,7 @@
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": false,
-                    "caseExact": false,
-                    "canonicalValues": [
-                        "permission"
-                    ]
+                    "caseExact": false
                 },
                 {
                     "name": "primary",
@@ -785,8 +783,8 @@
             "subAttributes": [
                 {
                     "name": "value",
-                    "description": "The value of a certificate.",
-                    "type": "string",
+                    "description": "The value of an X.509 certificate.",
+                    "type": "binary",
                     "mutability": "readWrite",
                     "returned": "default",
                     "uniqueness": "none",
@@ -814,10 +812,7 @@
                     "uniqueness": "none",
                     "required": false,
                     "multiValued": false,
-                    "caseExact": false,
-                    "canonicalValues": [
-                        "permission"
-                    ]
+                    "caseExact": false
                 },
                 {
                     "name": "primary",

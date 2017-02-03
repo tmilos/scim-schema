@@ -11,15 +11,10 @@
 
 namespace Tmilos\ScimSchema\Model;
 
-class Schema extends Resource
-{
-    const SCHEMA = 'urn:ietf:params:scim:schemas:core:2.0:Schema';
-    const RESOURCE_TYPE = 'urn:ietf:params:scim:schemas:core:2.0:ResourceType';
-    const SERVICE_PROVIDER_CONFIG = 'urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig';
-    const GROUP = 'urn:ietf:params:scim:schemas:core:2.0:Group';
-    const USER = 'urn:ietf:params:scim:schemas:core:2.0:User';
-    const ENTERPRISE_USER = 'urn:ietf:params:scim:schemas:extension:enterprise:2.0:User';
+use Tmilos\ScimSchema\ScimConstants;
 
+abstract class Schema extends Resource
+{
     /** @var string */
     protected $name;
 
@@ -29,17 +24,9 @@ class Schema extends Resource
     /** @var Schema\Attribute[] */
     protected $attributes = [];
 
-    /**
-     * @param string $id
-     */
-    public function __construct($id)
+    public function getResourceType()
     {
-        parent::__construct();
-        $this->id = $id;
-        $this->schemas = [static::SCHEMA];
-        $this->meta = new Meta(ResourceType::SCHEMA);
-
-        $this->attributes = [];
+        return ScimConstants::RESOURCE_TYPE_SCHEMA;
     }
 
     /**
