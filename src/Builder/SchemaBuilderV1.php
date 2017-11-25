@@ -2066,6 +2066,11 @@ class SchemaBuilderV1 extends SchemaBuilder
         ),
     );
 
+    public function __construct($schemasEndpointUrl = null)
+    {
+        parent::__construct($schemasEndpointUrl ?: 'http://localhost/'.ScimConstantsV1::ENDPOINT_SCHEMAS);
+    }
+
     protected function getSchemaClass()
     {
         return Schema::class;

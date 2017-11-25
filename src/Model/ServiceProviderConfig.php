@@ -139,6 +139,7 @@ abstract class ServiceProviderConfig extends Resource
     public function serializeObject()
     {
         $result = parent::serializeObject();
+        unset($result['id']);
 
         if ($this->documentationUri) {
             $result['documentationUri'] = $this->documentationUri;

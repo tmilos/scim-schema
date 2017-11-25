@@ -13,11 +13,12 @@ namespace Tmilos\ScimSchema;
 
 abstract class ScimConstantsV1
 {
-    const SCHEMA_USER = 'urn:scim:schemas:core:1.0';
+    const CORE = 'urn:scim:schemas:core:1.0';
+    const SCHEMA_USER = 'urn:scim:schemas:core:1.0:User';
     const SCHEMA_ENTERPRISE_USER = 'urn:scim:schemas:extension:enterprise:1.0';
-    const SCHEMA_GROUP = 'urn:scim:schemas:core:1.0';
-    const SCHEMA_SERVICE_PROVIDER_CONFIG = 'urn:scim:schemas:core:1.0';
-    const SCHEMA_SCHEMA = 'urn:scim:schemas:core:1.0';
+    const SCHEMA_GROUP = 'urn:scim:schemas:core:1.0:Group';
+    const SCHEMA_SERVICE_PROVIDER_CONFIG = 'urn:scim:schemas:core:1.0:Service Provider Configuration';
+    const SCHEMA_SCHEMA = 'urn:scim:schemas:core:1.0:Schema';
 
     const MESSAGE_LIST_RESPONSE = 'urn:scim:schemas:core:1.0';
     const MESSAGE_SEARCH_REQUEST = 'urn:ietf:params:scim:api:messages:2.0:SearchRequest';

@@ -74,7 +74,7 @@ abstract class ListResponse extends SchemaBase implements SerializableInterface
     public function serializeObject()
     {
         $result = [
-            'schemas' => [Schema::LIST_RESPONSE],
+            'schemas' => $this->getSchemas(),
             'totalResults' => $this->totalResults,
             'Resources' => [],
         ];

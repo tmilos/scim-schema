@@ -26,7 +26,7 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_minimal_user_representation()
     {
         $result = $this->validator->validate(
-            $this->loadFromFile(__DIR__.'/user.ok.minimal.json'),
+            $this->loadFromFile('/v2.user.ok.minimal.json'),
             $this->schemaBuilder->getUser()
         );
 
@@ -36,7 +36,7 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_full_user_representation()
     {
         $result = $this->validator->validate(
-            $this->loadFromFile(__DIR__.'/user.ok.full.json'),
+            $this->loadFromFile('/v2.user.ok.full.json'),
             $this->schemaBuilder->getUser()
         );
 
@@ -46,7 +46,7 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     public function test_enterprise_user_full()
     {
         $result = $this->validator->validate(
-            $this->loadFromFile(__DIR__.'/enterprise_user.ok.full.json'),
+            $this->loadFromFile('/v2.enterprise_user.ok.full.json'),
             $this->schemaBuilder->getUser(),
             [$this->schemaBuilder->getEnterpriseUser()]
         );
@@ -252,8 +252,13 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
         ], $result->getErrorsAsStrings());
     }
 
+    /**
+     * @param string $filename
+     *
+     * @return array
+     */
     private function loadFromFile($filename)
     {
-        return json_decode(file_get_contents($filename), true);
+        return json_decode(file_get_contents(__DIR__.'/../resources/'.$filename), true);
     }
 }

@@ -2,10 +2,11 @@
 
 namespace Tests\Tmilos\ScimSchema\Builder;
 
+use Tests\Tmilos\ScimSchema\TestHelper;
 use Tmilos\ScimSchema\Builder\ServiceProviderConfigBuilderV2;
 use Tmilos\ScimSchema\Model\SPC\AuthenticationScheme;
 
-class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
+class ServiceProviderConfigBuilderV2Test extends \PHPUnit_Framework_TestCase
 {
     public function test_builds_default_service_provider_config()
     {
@@ -13,7 +14,7 @@ class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
         $spc = $builder->buildServiceProviderConfig();
         $arr = $spc->serializeObject();
 
-        $this->assertEquals($this->getExpected(__DIR__.'/service_provider_config.default.json'), $arr);
+        $this->assertEquals(TestHelper::getExpected('v2.service_provider_config.default.json'), $arr);
     }
 
     public function test_builds_custom_service_provider_config()
@@ -42,22 +43,6 @@ class ServiceProviderConfigBuilderTest extends \PHPUnit_Framework_TestCase
         $spc = $builder->buildServiceProviderConfig();
         $arr = $spc->serializeObject();
 
-        $this->assertEquals($this->getExpected(__DIR__.'/service_provider_config.custom.json'), $arr);
-    }
-
-    /**
-     * @param $filename
-     *
-     * @return array
-     */
-    private function getExpected($filename)
-    {
-        $json = trim(file_get_contents($filename));
-        $result = json_decode($json, true);
-        if (!$result) {
-            $this->fail("Error json decoding file '$filename': ".json_last_error_msg());
-        }
-
-        return $result;
+        $this->assertEquals(TestHelper::getExpected('v2.service_provider_config.custom.json'), $arr);
     }
 }

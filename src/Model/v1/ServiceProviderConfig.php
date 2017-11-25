@@ -17,6 +17,6 @@ class ServiceProviderConfig extends \Tmilos\ScimSchema\Model\ServiceProviderConf
 {
     public function getSchemaId()
     {
-        return ScimConstantsV1::SCHEMA_SERVICE_PROVIDER_CONFIG;
+        return ScimConstantsV1::CORE;
     }
 }

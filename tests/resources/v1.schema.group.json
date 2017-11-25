@@ -1,0 +1,198 @@
+{
+    "id": "urn:scim:schemas:core:1.0:Group",
+    "schema": "urn:scim:schemas:core:1.0",
+    "meta": {
+        "resourceType": "Schema",
+        "created": "2001-01-01T00:00:00+00:00",
+        "lastModified": "2001-01-01T00:00:00+00:00",
+        "version": "W/\"F57BE29D14171D1FDD6C41E7A5C616AE7B631728\"",
+        "location": "http://localhost/v1/schemas/urn:scim:schemas:core:1.0:Group"
+    },
+    "name": "Group",
+    "description": "Group resource.",
+    "attributes": [
+        {
+            "name": "displayName",
+            "description": "A human-readable name for the group.",
+            "type": "string",
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": true,
+            "multiValued": false,
+            "caseExact": false
+        },
+        {
+            "name": "members",
+            "description": "A list of members of the group.",
+            "type": "complex",
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": true,
+            "caseExact": false,
+            "subAttributes": [
+                {
+                    "name": "type",
+                    "description": "A label indicating the type of resource, e.g., 'User' or 'Group'.",
+                    "type": "string",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false,
+                    "canonicalValues": [
+                        "User",
+                        "Group"
+                    ]
+                },
+                {
+                    "name": "primary",
+                    "type": "boolean",
+                    "mutability": "readWrite",
+                    "returned": "default",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "display",
+                    "type": "string",
+                    "mutability": "readWrite",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "value",
+                    "description": "Identifier of the member of this group.",
+                    "type": "string",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "$ref",
+                    "description": "The URI corresponding to a SCIM resource that is a member of this group.",
+                    "type": "reference",
+                    "mutability": "immutable",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false,
+                    "referenceTypes": [
+                        "User",
+                        "Group"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "schemas",
+            "type": "string",
+            "mutability": "readWrite",
+            "returned": "always",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": true,
+            "caseExact": false
+        },
+        {
+            "name": "id",
+            "description": "A unique identifier for a SCIM resource as defined by the service provider.",
+            "type": "string",
+            "mutability": "readOnly",
+            "returned": "always",
+            "uniqueness": "server",
+            "required": false,
+            "multiValued": false,
+            "caseExact": true
+        },
+        {
+            "name": "externalId",
+            "description": "An identifier for the resource as defined by the provisioning client.",
+            "type": "string",
+            "mutability": "readWrite",
+            "returned": "default",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": false,
+            "caseExact": false
+        },
+        {
+            "name": "meta",
+            "type": "complex",
+            "mutability": "readOnly",
+            "returned": "always",
+            "uniqueness": "none",
+            "required": false,
+            "multiValued": false,
+            "caseExact": false,
+            "subAttributes": [
+                {
+                    "name": "resourceType",
+                    "description": "The name of the resource type of the resource.",
+                    "type": "string",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": true
+                },
+                {
+                    "name": "created",
+                    "description": "The DateTime that the resource was added to the service provider.",
+                    "type": "datetime",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "lastModified",
+                    "description": "The most recent DateTime that the details of this resource were updated at the service provider.",
+                    "type": "datetime",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "location",
+                    "description": "The URI of the resource being returned.",
+                    "type": "reference",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": false
+                },
+                {
+                    "name": "version",
+                    "description": "The version of the resource being returned.",
+                    "type": "string",
+                    "mutability": "readOnly",
+                    "returned": "default",
+                    "uniqueness": "none",
+                    "required": false,
+                    "multiValued": false,
+                    "caseExact": true
+                }
+            ]
+        }
+    ]
+}

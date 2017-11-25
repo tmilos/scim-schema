@@ -2,6 +2,7 @@
 
 namespace Tests\Tmilos\ScimSchema\Builder;
 
+use Tests\Tmilos\ScimSchema\TestHelper;
 use Tmilos\ScimSchema\Builder\SchemaBuilderV2;
 
 class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
@@ -11,7 +12,7 @@ class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
         $builder = new SchemaBuilderV2();
         $schema = $builder->getGroup()->serializeObject();
 
-        $this->compare($this->getExpectedGroup(), $schema);
+        TestHelper::compare(TestHelper::getExpected('v2.schema.group.json'), $schema, $this);
     }
 
     public function test_user()
@@ -19,7 +20,7 @@ class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
         $builder = new SchemaBuilderV2();
         $schema = $builder->getUser()->serializeObject();
 
-        $this->compare($this->getExpectedUser(), $schema);
+        TestHelper::compare(TestHelper::getExpected('v2.schema.user.json'), $schema, $this);
     }
 
     public function test_schema()
@@ -27,7 +28,7 @@ class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
         $builder = new SchemaBuilderV2();
         $schema = $builder->getSchema()->serializeObject();
 
-        $this->compare($this->getExpectedSchema(), $schema);
+        TestHelper::compare(TestHelper::getExpected('v2.schema.schema.json'), $schema, $this);
     }
 
     public function test_resource_type()
@@ -35,7 +36,7 @@ class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
         $builder = new SchemaBuilderV2();
         $schema = $builder->getResourceType()->serializeObject();
 
-        $this->compare($this->getExpectedResourceType(), $schema);
+        TestHelper::compare(TestHelper::getExpected('v2.schema.resource_type.json'), $schema, $this);
     }
 
     public function test_service_provider_config()
@@ -43,7 +44,7 @@ class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
         $builder = new SchemaBuilderV2();
         $schema = $builder->getServiceProviderConfig()->serializeObject();
 
-        $this->compare($this->getExpectedServiceProviderConfig(), $schema);
+        TestHelper::compare(TestHelper::getExpected('v2.schema.service_provider_config.json'), $schema, $this);
     }
 
     public function test_enterprise_user()
@@ -51,90 +52,6 @@ class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
         $builder = new SchemaBuilderV2();
         $schema = $builder->getEnterpriseUser()->serializeObject();
 
-        $this->compare($this->getExpectedEnterpriseUser(), $schema);
-    }
-
-    private function compare($expected, $actual)
-    {
-        $expectedArr = explode("\n", str_replace("\r", '', json_encode($expected, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)));
-        $actualArr = explode("\n", str_replace("\r", '', json_encode($actual, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)));
-
-        $minSize = min(count($expectedArr), count($actualArr));
-        for ($i=0; $i<$minSize; $i++) {
-            if ($expectedArr[$i] != $actualArr[$i]) {
-                $expectedArr[$i] = '!'.$expectedArr[$i];
-                $actualArr[$i] = '!'.$actualArr[$i];
-                print "\nMismatch at line $i:\n";
-                $start = $i - 10;
-                if ($start < 0) { $start = 0; }
-                $expectedBuffer = implode("\n", array_slice($expectedArr, $start, 20));
-                $actualBuffer = implode("\n", array_slice($actualArr, $start, 20));
-
-                print "Expected:\n$expectedBuffer\n\nbut got:\n$actualBuffer\n";
-
-                $this->fail();
-            }
-        }
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    private function getExpected($filename)
-    {
-        $json = trim(file_get_contents(__DIR__.'/'.$filename));
-        $result = json_decode($json, true);
-        if (!$result) {
-            $this->fail("Error json decoding file '$filename': ".json_last_error_msg());
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return \stdClass
-     */
-    private function getExpectedGroup()
-    {
-        return $this->getExpected('schema.group.json');
-    }
-
-    /**
-     * @return \stdClass
-     */
-    private function getExpectedUser()
-    {
-        return $this->getExpected('schema.user.json');
-    }
-
-    /**
-     * @return \stdClass
-     */
-    private function getExpectedSchema()
-    {
-        return $this->getExpected('schema.schema.json');
-    }
-
-    /**
-     * @return \stdClass
-     */
-    private function getExpectedResourceType()
-    {
-        return $this->getExpected('schema.resource_type.json');
-    }
-
-    /**
-     * @return \stdClass
-     */
-    private function getExpectedServiceProviderConfig()
-    {
-        return $this->getExpected('schema.service_provider_config.json');
-    }
-
-    /**
-     * @return \stdClass
-     */
-    private function getExpectedEnterpriseUser()
-    {
-        return $this->getExpected('schema.enterprise_user.json');
+        TestHelper::compare(TestHelper::getExpected('v2.schema.enterprise_user.json'), $schema, $this);
     }
 }

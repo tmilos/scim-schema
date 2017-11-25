@@ -150,9 +150,11 @@ abstract class Resource extends SchemaBase implements SerializableInterface, Des
         if (isset($arr['externalId'])) {
             $result->externalId = $data['externalId'];
         }
-        foreach ($data['schemas'] as $schemaId) {
-            if ($schemaId != $result->getSchemaId()) {
-                $result->extensions[$schemaId] = isset($data[$schemaId]) ? $data[$schemaId] : null;
+        if (isset($data['schemas'])) {
+            foreach ($data['schemas'] as $schemaId) {
+                if ($schemaId != $result->getSchemaId()) {
+                    $result->extensions[$schemaId] = isset($data[$schemaId]) ? $data[$schemaId] : null;
+                }
             }
         }
 

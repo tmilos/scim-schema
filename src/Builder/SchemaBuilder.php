@@ -39,7 +39,7 @@ abstract class SchemaBuilder
     /**
      * @param string $schemaId
      *
-     * @return Schema
+     * @return \Tmilos\ScimSchema\Model\v1\Schema|\Tmilos\ScimSchema\Model\v2\Schema|Schema
      */
     public function get($schemaId)
     {

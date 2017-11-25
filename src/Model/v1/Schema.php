@@ -19,4 +19,23 @@ class Schema extends \Tmilos\ScimSchema\Model\Schema
     {
         return ScimConstantsV1::SCHEMA_SCHEMA;
     }
+
+    public function serializeObject()
+    {
+        $parentValue = parent::serializeObject();
+
+        $result = [
+            'id' => $parentValue['id'],
+            'schema' => ScimConstantsV1::CORE,
+        ];
+
+        unset($parentValue['id']);
+        unset($parentValue['schemas']);
+
+        foreach ($parentValue as $k=>$v) {
+            $result[$k] = $v;
+        }
+
+        return $result;
+    }
 }
