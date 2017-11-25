@@ -61,8 +61,8 @@ $schema->serializeObject();
 An object can be validated against a schema
 
 ```php
-/** @var object|array $object */
-$object = getTheObject();
+/** @var array $object */
+$object = getTheObjectAsArray();
 
 $validator = new SchemaValidator();
 $objectSchema = getTheSchema();
