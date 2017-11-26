@@ -18,6 +18,8 @@ return PhpCsFixer\Config::create()
         '@Symfony' => true,
         'simplified_null_return' => false,
         'phpdoc_no_empty_return' => false,
+        'yoda_style' => null,
+        'self_accessor' => false,
         'no_mixed_echo_print' => ['use' => 'print'],
         'header_comment' => ['header' => $header],
     ))

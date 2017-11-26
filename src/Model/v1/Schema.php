@@ -32,7 +32,7 @@ class Schema extends \Tmilos\ScimSchema\Model\Schema
         unset($parentValue['id']);
         unset($parentValue['schemas']);
 
-        foreach ($parentValue as $k=>$v) {
+        foreach ($parentValue as $k => $v) {
             $result[$k] = $v;
         }
 
