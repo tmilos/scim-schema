@@ -213,7 +213,8 @@ class Attribute implements SerializableInterface
             case ScimConstants::ATTRIBUTE_TYPE_BOOLEAN: return is_bool($value);
             case ScimConstants::ATTRIBUTE_TYPE_DECIMAL: return is_float($value) || is_int($value);
             case ScimConstants::ATTRIBUTE_TYPE_INTEGER: return is_int($value);
-            case ScimConstants::ATTRIBUTE_TYPE_DATETIME: return $value instanceof \DateTime;  // improve this
+            case ScimConstants::ATTRIBUTE_TYPE_DATETIME:
+                return $value instanceof \DateTime || false !== \DateTime::createFromFormat(\DateTime::ATOM, $value);
             case ScimConstants::ATTRIBUTE_TYPE_BINARY: return true;
             case ScimConstants::ATTRIBUTE_TYPE_REFERENCE: return is_string($value); // improve this
             case ScimConstants::ATTRIBUTE_TYPE_COMPLEX: return is_array($value) || is_object($value);
