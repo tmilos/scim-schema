@@ -202,6 +202,36 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
         ], $result->getErrorsAsStrings());
     }
 
+    public function test_error_on_invalid_datetime_type()
+    {
+        $schema = new Schema(ScimConstantsV2::SCHEMA_USER);
+        $schema->addAttribute(
+            AttributeBuilder::create('birthDate', ScimConstants::ATTRIBUTE_TYPE_DATETIME)->getAttribute()
+        );
+
+        $object = ['birthDate' => '17/5-1814'];
+
+        $result = $this->validator->validate($object, $schema);
+
+        $this->assertEquals([
+            '[birthDate] Attribute has invalid value for type "dateTime" [urn:ietf:params:scim:schemas:core:2.0:User]',
+        ], $result->getErrorsAsStrings());
+    }
+
+    public function test_no_error_on_valid_datetime_type()
+    {
+        $schema = new Schema(ScimConstantsV2::SCHEMA_USER);
+        $schema->addAttribute(
+            AttributeBuilder::create('birthDate', ScimConstants::ATTRIBUTE_TYPE_DATETIME)->getAttribute()
+        );
+
+        $object = ['birthDate' => '2019-01-31T17:19:37+01:00'];
+
+        $result = $this->validator->validate($object, $schema);
+
+        $this->assertEmpty($result->getErrors());
+    }
+
     public function test_error_on_invalid_attribute_in_schema_extension()
     {
         $schema = new Schema(ScimConstantsV2::SCHEMA_USER);
