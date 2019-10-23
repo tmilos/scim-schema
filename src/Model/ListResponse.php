@@ -86,10 +86,11 @@ abstract class ListResponse extends SchemaBase implements SerializableInterface
         foreach ($this->resources as $resource) {
             if ($resource instanceof SerializableInterface) {
                 $result['Resources'][] = $resource->serializeObject();
-            } elseif (!is_array($resource)) {
-                throw new \InvalidArgumentException('Resource must implement SerializableInterface or already be serialized to array');
+            } elseif (is_array($resource)) {
+                $result['Resources'][] = $resource;
+            } else {
+              throw new \InvalidArgumentException('Resource must implement SerializableInterface or already be serialized to array');
             }
-            $result['Resources'][] = $resource;
         }
 
         return $result;
