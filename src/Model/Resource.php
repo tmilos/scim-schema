@@ -147,7 +147,7 @@ abstract class Resource extends SchemaBase implements SerializableInterface, Des
             throw new \RuntimeException(sprintf('Error deserializing resource type "%s" into class "%s"', $data['meta']['resourceType'], get_class($result)));
         }
         $result->meta = Meta::deserializeObject($data['meta']);
-        if (isset($arr['externalId'])) {
+        if (isset($data['externalId'])) {
             $result->externalId = $data['externalId'];
         }
         if (isset($data['schemas'])) {
