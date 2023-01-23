@@ -16,13 +16,21 @@ SCIM schema PHP library with support for both v1 and v2.
 [![License](https://img.shields.io/packagist/l/tmilos/scim-schema.svg)](https://packagist.org/packages/tmilos/scim-schema)
 [![Packagist Version](https://img.shields.io/packagist/v/tmilos/scim-schema.svg?style=flat-square)](https://packagist.org/packages/tmilos/scim-schema)
 
+# Install
 
-# Schema
+Install Scim Schema using composer:
 
-Build default schema
+```bash
+composer require tmilos/scim-schema
+```
+
+# Usage
+
+### Schema
+
+Build default schema:
 
 ```php
-<?php
 $schemaBuilder = new SchemaBuilderV2(); // or SchemaBuilderV1
 
 $groupSchema = $schemaBuilder->getGroup();
@@ -33,12 +41,13 @@ $serviceProviderConfigSchema = $schemaBuilder->getServiceProviderConfig();
 $resourceTypeSchema = $schemaBuilder->getResourceType();
 ```
 
-Or build your own custom schema
+Or build your own custom schema:
 
 ```php
-<?php
 $schema = new Schema();
-$schema->setName('CustomSchema);
+
+$schema->setName('CustomSchema');
+
 $schema->addAttribute(
     AttributeBuilder::create('name', ScimConstants::ATTRIBUTE_TYPE_STRING, 'Name of the object')
         ->setMutability(false)
@@ -49,16 +58,14 @@ $schema->addAttribute(
 And serialize the scim schema object
 
 ```php
-<?php
 $schema = (new SchemaBuilderV2())->getUser();
+
 $schema->serializeObject();
 ```
 
+### Schema validation
 
-
-# Schema validation
-
-An object can be validated against a schema
+An object can be validated against a schema:
 
 ```php
 /** @var array $object */
