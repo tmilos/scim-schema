@@ -2,6 +2,7 @@
 
 namespace Tests\Tmilos\ScimSchema\Validator;
 
+use PHPUnit\Framework\TestCase;
 use Tmilos\ScimSchema\Builder\AttributeBuilder;
 use Tmilos\ScimSchema\Builder\SchemaBuilderV2;
 use Tmilos\ScimSchema\Model\v2\Schema;
@@ -9,7 +10,7 @@ use Tmilos\ScimSchema\ScimConstants;
 use Tmilos\ScimSchema\ScimConstantsV2;
 use Tmilos\ScimSchema\Validator\SchemaValidator;
 
-class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
+class SchemaValidatorTest extends TestCase
 {
     /** @var SchemaValidator */
     private $validator;
@@ -17,7 +18,7 @@ class SchemaValidatorTest extends \PHPUnit_Framework_TestCase
     /** @var SchemaBuilderV2 */
     private $schemaBuilder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->validator = new SchemaValidator();
         $this->schemaBuilder = new SchemaBuilderV2();

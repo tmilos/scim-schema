@@ -2,6 +2,8 @@
 
 namespace Tests\Tmilos\ScimSchema;
 
+use PHPUnit\Framework\TestCase;
+
 abstract class TestHelper
 {
     /**
@@ -20,12 +22,7 @@ abstract class TestHelper
         return $result;
     }
 
-    /**
-     * @param array                       $expected
-     * @param array                       $actual
-     * @param \PHPUnit_Framework_TestCase $testCase
-     */
-    public static function compare($expected, $actual, \PHPUnit_Framework_TestCase $testCase)
+    public static function compare(array $expected, array $actual, TestCase $testCase)
     {
         $expectedArr = explode("\n", str_replace("\r", '', json_encode($expected, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)));
         $actualArr = explode("\n", str_replace("\r", '', json_encode($actual, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)));

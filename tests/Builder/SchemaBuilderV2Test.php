@@ -2,10 +2,11 @@
 
 namespace Tests\Tmilos\ScimSchema\Builder;
 
+use PHPUnit\Framework\TestCase;
 use Tests\Tmilos\ScimSchema\TestHelper;
 use Tmilos\ScimSchema\Builder\SchemaBuilderV2;
 
-class SchemaBuilderV2Test extends \PHPUnit_Framework_TestCase
+class SchemaBuilderV2Test extends TestCase
 {
     public function test_group()
     {
