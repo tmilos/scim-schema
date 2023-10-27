@@ -2,11 +2,12 @@
 
 namespace Tests\Tmilos\ScimSchema\Builder;
 
+use PHPUnit\Framework\TestCase;
 use Tests\Tmilos\ScimSchema\TestHelper;
 use Tmilos\ScimSchema\Builder\ServiceProviderConfigBuilderV2;
 use Tmilos\ScimSchema\Model\SPC\AuthenticationScheme;
 
-class ServiceProviderConfigBuilderV2Test extends \PHPUnit_Framework_TestCase
+class ServiceProviderConfigBuilderV2Test extends TestCase
 {
     public function test_builds_default_service_provider_config()
     {

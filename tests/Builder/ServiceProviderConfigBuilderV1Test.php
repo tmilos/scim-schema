@@ -2,10 +2,11 @@
 
 namespace Tests\Tmilos\ScimSchema\Builder;
 
+use PHPUnit\Framework\TestCase;
 use Tests\Tmilos\ScimSchema\TestHelper;
 use Tmilos\ScimSchema\Builder\ServiceProviderConfigBuilderV1;
 
-class ServiceProviderConfigBuilderV1Test extends \PHPUnit_Framework_TestCase
+class ServiceProviderConfigBuilderV1Test extends TestCase
 {
     public function test_builds_default_service_provider_config()
     {

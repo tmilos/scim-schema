@@ -2,11 +2,12 @@
 
 namespace Tests\Tmilos\ScimSchema\Builder;
 
+use PHPUnit\Framework\TestCase;
 use Tests\Tmilos\ScimSchema\TestHelper;
 use Tmilos\ScimSchema\Builder\ResourceTypeBuilder;
 use Tmilos\ScimSchema\ScimConstants;
 
-class ResourceTypeBuilderTest extends \PHPUnit_Framework_TestCase
+class ResourceTypeBuilderTest extends TestCase
 {
     public function test_group()
     {
